@@ -1,9 +1,12 @@
 package Models;
 
+import Models.Data.Department;
+
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.util.HashSet;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 public class DepartmentsModel implements TableModel {
@@ -45,7 +48,11 @@ public class DepartmentsModel implements TableModel {
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex)
     {
-        return true;
+        if (columnIndex == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Override
@@ -62,16 +69,14 @@ public class DepartmentsModel implements TableModel {
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-         Department current = data.get(rowIndex);
          switch (columnIndex) {
              case 0:
-                 current.setName((String) aValue);
+                 data.get(rowIndex).setName((String) aValue);
                  break;
              case 1:
-                 current.setPhoneNumber((String) aValue);
+                 data.get(rowIndex).setPhoneNumber((String) aValue);
                  break;
          }
-
     }
 
     @Override
@@ -82,6 +87,28 @@ public class DepartmentsModel implements TableModel {
     @Override
     public void removeTableModelListener(TableModelListener l) {
         listeners.remove(l);
+    }
+
+    public boolean hasData(Department dep)
+    {
+        return data.contains(dep);
+    }
+
+    public void addData(Department dep) throws CloneNotSupportedException {
+        if (hasData(dep)) throw new CloneNotSupportedException("Department exists");
+        data.add(dep);
+    }
+
+    public void removeData(String depName) throws NoSuchElementException
+    {
+        Department temp = new Department(depName, "");
+        if (!hasData(temp)) throw new NoSuchElementException("No such department");
+        data.remove(temp);
+    }
+
+    public List<Department> getData()
+    {
+        return this.data;
     }
 }
 

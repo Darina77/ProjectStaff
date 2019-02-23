@@ -1,33 +1,39 @@
 package View;
 
-import Models.DepartmentInfo;
+import Models.Data.DepartmentInfo;
 import Models.DepartmentInfoModel;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableModel;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 
 public class DepartmentsInfoPanel extends JFrame
 {
-    public DepartmentsInfoPanel(ArrayList<DepartmentInfo> departmentInfoArrayList, int width, int height)
+    public DepartmentsInfoPanel(ArrayList<DepartmentInfo> departmentInfoArrayList, String depName, int width, int height)
     {
-        super();
+        super("Departments info");
         JPanel main = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         setSize(width, height);
-
-        TableModel model = new DepartmentInfoModel(departmentInfoArrayList);
-        JTable table = new JTable(model);
-        c.gridy = 1;
+        JLabel label = new JLabel(depName);
+        c.gridy = 0;
         c.gridwidth = 3;
         c.gridx = 0;
         c.weightx = 1;
         c.weighty = 1;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        main.add(label);
+        TableModel model = new DepartmentInfoModel(departmentInfoArrayList);
+        JTable table = new JTable(model);
+        c.gridy = 1;
         c.fill = GridBagConstraints.BOTH;
-
         main.add(new JScrollPane(table), c);
         add(main);
         setVisible(true);
@@ -44,6 +50,8 @@ class FindDepartmentInfo extends JDialog
     private int result = -1;
 
     private JPanel content;
+    private JTextField textField1;
+    private JSpinner  date;
 
     FindDepartmentInfo(Frame parent) {
         super(parent, true);
@@ -79,15 +87,33 @@ class FindDepartmentInfo extends JDialog
 
         JLabel label1 = new JLabel("Department name");
         content.add(label1);
-        JTextField textField1 = new JTextField(15);
+        textField1 = new JTextField(15);
         content.add(textField1);
         JLabel label2 = new JLabel("Date");
         content.add(label2);
-        JFormattedTextField ftf = new JFormattedTextField();
-        ftf.setValue(new Date());
-        content.add(ftf);
+        date = createDateSpinner();
+        content.add(date);
 
         setVisible(true);
         return result;
+    }
+
+    private JSpinner createDateSpinner() {
+        SpinnerDateModel spinnerDateModel = new SpinnerDateModel();
+        JSpinner dateSpinner = new JSpinner(spinnerDateModel);
+        dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd"));
+        dateSpinner.setName("date-spinner");
+        return dateSpinner;
+    }
+
+    String getDate()
+    {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return  dateFormat.format(date.getValue());
+    }
+
+    String getDepName()
+    {
+        return textField1.getText();
     }
 }

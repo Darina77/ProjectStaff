@@ -1,10 +1,13 @@
 package Models;
 
+import Models.Data.Employee;
+
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.text.ParseException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 public class EmployeesModel implements TableModel {
@@ -82,7 +85,7 @@ public class EmployeesModel implements TableModel {
                 current.setSurname((String) aValue);
                 break;
             case 2:
-                current.setSex((char) aValue);
+                current.setSex(((String) aValue).charAt(0));
                 break;
             case 3:
                 try {
@@ -103,5 +106,25 @@ public class EmployeesModel implements TableModel {
     @Override
     public void removeTableModelListener(TableModelListener l) {
         listeners.remove(l);
+    }
+
+    public boolean hasData(Employee employee) {
+        return data.contains(employee);
+    }
+
+    public void addData(Employee employee) {
+        int id = data.get(data.size()-1).getId() + 1;
+        employee.setId(id);
+        data.add(employee);
+    }
+
+    public void removeData(int idEmp) {
+        Employee temp = new Employee(idEmp);
+        if (!hasData(temp)) throw new NoSuchElementException("No such department");
+        data.remove(temp);
+    }
+
+    public List<Employee> getData() {
+        return this.data;
     }
 }

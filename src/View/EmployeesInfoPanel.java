@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 class EmployeesInfoPanel extends JFrame
@@ -14,7 +15,7 @@ class EmployeesInfoPanel extends JFrame
 
     public EmployeesInfoPanel(TableModel model, String text, int width, int height)
     {
-        super();
+        super(text);
         JPanel main = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         setSize(width, height);
@@ -44,6 +45,10 @@ class FindEmployeeInfo extends JDialog
     private int result = -1;
 
     private JPanel content;
+
+    private JFormattedTextField textField1;
+    private JSpinner startDate;
+    private JSpinner endDate;
 
     FindEmployeeInfo(Frame parent) {
         super(parent, true);
@@ -79,20 +84,45 @@ class FindEmployeeInfo extends JDialog
 
         JLabel label1 = new JLabel("Employee id");
         content.add(label1);
-        JTextField textField1 = new JTextField();
+
+        textField1 = new JFormattedTextField();
+        textField1.setValue(new Integer(1));
         content.add(textField1);
+
         JLabel label2 = new JLabel("Start date");
         content.add(label2);
-        JFormattedTextField ftf = new JFormattedTextField();
-        ftf.setValue(new Date());
-        content.add(ftf);
+        startDate = createDateSpinner();
+        content.add(startDate);
+
         JLabel label3 = new JLabel("End date");
         content.add(label3);
-        JFormattedTextField ftf2 = new JFormattedTextField();
-        ftf2.setValue(new Date());
-        content.add(ftf2);
+        endDate = createDateSpinner();
+        content.add(endDate);
+
         setVisible(true);
 
         return result;
+    }
+
+    private JSpinner createDateSpinner() {
+        SpinnerDateModel spinnerDateModel = new SpinnerDateModel();
+        JSpinner dateSpinner = new JSpinner(spinnerDateModel);
+        dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd"));
+        dateSpinner.setName("date-spinner");
+        return dateSpinner;
+    }
+
+    public int getEmplId() {
+        return (Integer) textField1.getValue();
+    }
+
+    public String getStartDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return  dateFormat.format(startDate.getValue());
+    }
+
+    public String getEndDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return  dateFormat.format(endDate.getValue());
     }
 }

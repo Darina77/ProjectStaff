@@ -1,4 +1,4 @@
-package Models;
+package Models.Data;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,15 +12,23 @@ public class Employee {
     private Date birthday;
     private SimpleDateFormat dateFormat;
 
-    public Employee(int id, String surname, char sex, String birthday) throws ParseException
+    public Employee(int id, String surname, char sex, String birthday)
     {
         this.id = id;
         this.surname = surname;
         this.sex = sex;
-        this.dateFormat = new SimpleDateFormat("dd.mm.yyyy");
-        this.birthday = dateFormat.parse(birthday);
+        this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            this.birthday = dateFormat.parse(birthday);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
+    public Employee(int id)
+    {
+        this.id = id;
+    }
 
     public String getBirthday() {return dateFormat.format(birthday);}
 
@@ -50,5 +58,20 @@ public class Employee {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o){
+            return true;
+        }
+        else if (o.getClass() != Employee.class) {
+            return false;
+        }
+        else {
+            Employee emp = (Employee) o;
+            return this.id == (emp.getId());
+        }
     }
 }

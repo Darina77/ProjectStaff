@@ -1,5 +1,7 @@
 package Models;
 
+import Models.Data.DepartmentInfo;
+
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.util.HashSet;

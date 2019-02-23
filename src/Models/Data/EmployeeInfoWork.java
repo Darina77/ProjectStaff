@@ -1,4 +1,4 @@
-package Models;
+package Models.Data;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,13 +13,21 @@ public class EmployeeInfoWork {
     private Date startDate;
     private Date endDate;
 
-    public EmployeeInfoWork(String description, String projectName, int id, String startDate, String endDate) throws ParseException {
+    public EmployeeInfoWork(String description, String projectName, int id, String startDate, String endDate) {
         this.description = description;
         this.projectName = projectName;
         this.id = id;
-        this.dateFormat = new SimpleDateFormat("dd.mm.yyyy");
-        this.startDate = dateFormat.parse(startDate);
-        this.endDate = dateFormat.parse(endDate);
+        this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            this.startDate = dateFormat.parse(startDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            this.endDate = dateFormat.parse(endDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getDescription() {

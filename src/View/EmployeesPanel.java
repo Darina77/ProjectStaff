@@ -1,103 +1,110 @@
 package View;
 
+import Controller.EmployeesController;
 import Models.*;
+import Models.Data.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.NoSuchElementException;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
 public class EmployeesPanel extends JPanel
 {
-    public EmployeesPanel(int width, int height)
+    EmployeesController controller;
+
+    public EmployeesPanel(int width, int height, EmployeesController controller)
     {
         super(new GridBagLayout());
-
+        this.controller = controller;
         GridBagConstraints c = new GridBagConstraints();
         setSize(width, height);
-        ArrayList<Employee> employeesArrayList = new ArrayList<>();
-
-        for (int i = 0; i < 25; i++)
-        {
-            try {
-                employeesArrayList.add(new Employee(i, "Surname"+i, 's', "11.11.2011"));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
+        ArrayList<Employee> employeesArrayList = (ArrayList<Employee>) controller.getAllEmployees();
+        TableModel model = new EmployeesModel(employeesArrayList);
+        JTable table = new JTable(model);
 
         JButton buttonAdd = new JButton("Add");
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
-        c.gridx = 0;
-        c.gridy = 0;
+        JButton buttonDelete = new JButton("Delete");
+        JButton buttonSave = new JButton("Save");
+        JButton buttonInfo = new JButton("Get Information");
+
         buttonAdd.addActionListener(e -> {
             final AddEmployee dialog = new AddEmployee((JFrame) SwingUtilities.getWindowAncestor(this));
             int result = dialog.show("Add employee");
             if (result == AddEmployee.OK_OPTION) {
                 System.out.println("Add employee");
-                showMessageDialog(null, "Add employee");
+                Employee employee = new Employee(0, dialog.getSurname(), dialog.getSex(), dialog.getDate());
+                if (!((EmployeesModel) model).hasData(employee)) {
+                    if (controller.addEmployee(employee)) {
+                        ((EmployeesModel) model).addData(employee);
+                        table.revalidate();
+                        showMessageDialog(null, "Add employee");
+                    } else {
+                        showMessageDialog(null, "Error!");
+                    }
+                } else {
+                    showMessageDialog(null, "Department must be unique!");
+                }
             } else {
                 System.out.println("User cancelled");
             }
         });
-        add(buttonAdd, c);
 
-        JButton buttonDelete = new JButton("Delete");
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
-        c.gridx = 1;
-        c.gridy = 0;
         buttonDelete.addActionListener(e -> {
             final RemoveEmployee dialog = new RemoveEmployee((JFrame) SwingUtilities.getWindowAncestor(this));
             int result = dialog.show("Remove employee");
             if (result == RemoveEmployee.OK_OPTION) {
                 System.out.println("Remove employee");
-                showMessageDialog(null, "Remove employee");
+                int idEmp = dialog.getId();
+                if (((EmployeesModel) model).hasData(new Employee(idEmp))) {
+                    if (controller.removeEmployee(idEmp)) {
+                        try {
+                            ((EmployeesModel) model).removeData(idEmp);
+                            table.revalidate();
+                            showMessageDialog(null, "Remove employee");
+                        } catch (NoSuchElementException e1) {
+                            showMessageDialog(null, "No such employee");
+                        }
+                    } else {
+                        showMessageDialog(null, "Error!");
+                    }
+                } else {
+                    showMessageDialog(null, "No such department");
+                }
             } else {
                 System.out.println("User cancelled");
             }
         });
-        add(buttonDelete, c);
-
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
-        c.gridx = 2;
-        c.gridy = 0;
-        JButton buttonSave = new JButton("Save");
         buttonSave.addActionListener(e -> {
-            System.out.println("Save complete");
-            showMessageDialog(null, "Save complete");
+            table.getCellEditor().stopCellEditing();
+            if (controller.updateEmployee(((EmployeesModel) table.getModel()).getData())) {
+                System.out.println("Save complete");
+                showMessageDialog(null, "Save complete");
+            } else {
+                System.out.println("Save error");
+                showMessageDialog(null, "Save error");
+            }
         });
-        add(buttonSave,  c);
 
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
-        c.gridx = 3;
-        c.gridy = 0;
-        JButton buttonInfo = new JButton("Get Information");
         buttonInfo.addActionListener(e -> {
             final FindEmployeeInfo dialog = new FindEmployeeInfo((JFrame) SwingUtilities.getWindowAncestor(this));
             int result = dialog.show("Employee info");
             if (result == RemoveDepartment.OK_OPTION) {
                 System.out.println("Info employee");
-                ArrayList<EmployeeInfoPos> infoArrayList1 = new ArrayList<>();
-                ArrayList<EmployeeInfoWork> infoArrayList2 = new ArrayList<>();
-                ArrayList<EmployeeInfoHead> infoArrayList3 = new ArrayList<>();
-                for (int i = 0; i < 25; i++) {
-                    try {
-                        infoArrayList1.add(new EmployeeInfoPos("Position" + i, "Description" + i, "11.11.2011", "11.11.2011", 1000 * i));
-                        infoArrayList2.add(new EmployeeInfoWork("Description" + 1, "ProjectName" + i, 10, "11.11.2011", "11.11.2011"));
-                        infoArrayList3.add(new EmployeeInfoHead("ProjectName" + i, "11.11.2011", "11.11.2011", 1000 * i));
-                    } catch (ParseException e1) {
-                        e1.printStackTrace();
-                    }
-                }
+                int emplId = dialog.getEmplId();
+                String startDate = dialog.getStartDate();
+                String endDate = dialog.getEndDate();
+
+                ArrayList<EmployeeInfoPos> infoArrayList1 = (ArrayList<EmployeeInfoPos>) controller.getEmployeePos(emplId, startDate, endDate);
+                ArrayList<EmployeeInfoWork> infoArrayList2 = (ArrayList<EmployeeInfoWork>) controller.getEmployeeWorks(emplId, startDate, endDate);
+                ArrayList<EmployeeInfoHead> infoArrayList3 = (ArrayList<EmployeeInfoHead>) controller.getEmployeeHead(emplId, startDate, endDate);
+
                 EmployeesInfoPanel panel1 = new EmployeesInfoPanel(new EmployeesInfoPosModel(infoArrayList1), "Employee`s positions", width, height);
                 EmployeesInfoPanel panel2 = new EmployeesInfoPanel(new EmployeesInfoWorkModel(infoArrayList2), "Employee`s works", width, height);
                 EmployeesInfoPanel panel3 = new EmployeesInfoPanel(new EmployeesInfoHeadModel(infoArrayList3), "Head", width, height);
@@ -105,17 +112,33 @@ public class EmployeesPanel extends JPanel
                 System.out.println("User cancelled");
             }
         });
-        add(buttonInfo,  c);
 
-        TableModel model = new EmployeesModel(employeesArrayList);
-        JTable table = new JTable(model);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridx = 0;
+        c.gridy = 0;
+        add(buttonAdd, c);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridx = 1;
+        c.gridy = 0;
+        add(buttonDelete, c);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridx = 2;
+        c.gridy = 0;
+        add(buttonSave, c);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridx = 3;
+        c.gridy = 0;
+        add(buttonInfo, c);
         c.gridy = 1;
         c.gridwidth = 4;
         c.gridx = 0;
         c.weightx = 1;
         c.weighty = 1;
         c.fill = GridBagConstraints.BOTH;
-
         add(new JScrollPane(table), c);
     }
 }
@@ -129,6 +152,7 @@ class RemoveEmployee extends JDialog
     private int result = -1;
 
     private JPanel content;
+    private JFormattedTextField textField1;
 
     RemoveEmployee(Frame parent) {
         super(parent, true);
@@ -164,13 +188,17 @@ class RemoveEmployee extends JDialog
 
         JLabel label1 = new JLabel("Employee id");
         content.add(label1);
-        JTextField textField1 = new JTextField(15);
+        textField1 = new JFormattedTextField();
+        textField1.setValue(new Integer(1));
         content.add(textField1);
 
         setVisible(true);
         return result;
     }
 
+    int getId(){
+        return (Integer) textField1.getValue();
+    }
 }
 
 
@@ -182,6 +210,10 @@ class AddEmployee extends JDialog
     private int result = -1;
 
     private JPanel content;
+    private JTextField textField1;
+    private JRadioButton maleRadioBut;
+    private JRadioButton femaleRadioBut;
+    private JSpinner  date;
 
     AddEmployee(Frame parent) {
         super(parent, true);
@@ -217,29 +249,54 @@ class AddEmployee extends JDialog
 
         JLabel label1 = new JLabel("Employee`s second name");
         content.add(label1);
-        JTextField textField1 = new JTextField(15);
+        textField1 = new JTextField(15);
         content.add(textField1);
+
         JLabel label2 = new JLabel("Employee`s sex");
         content.add(label2);
         JLabel label0 = new JLabel("");
         content.add(label0);
+
         ButtonGroup group = new ButtonGroup();
-        JRadioButton maleRadioBut = new JRadioButton("m");
+        maleRadioBut = new JRadioButton("m");
         maleRadioBut.setSelected(true);
         group.add(maleRadioBut);
         content.add(maleRadioBut);
-        JRadioButton famaleRadioBut = new JRadioButton("f");
-        content.add(famaleRadioBut);
-        group.add(famaleRadioBut);
+
+        femaleRadioBut = new JRadioButton("f");
+        content.add(femaleRadioBut);
+        group.add(femaleRadioBut);
+
         JLabel label3 = new JLabel("Employee`s birthday");
         content.add(label3);
-        JFormattedTextField ftf = new JFormattedTextField();
-        ftf.setValue(new Date());
-        content.add(ftf);
+        date = createDateSpinner();
+        content.add(date);
 
         setVisible(true);
         return result;
     }
+
+    private JSpinner createDateSpinner() {
+        SpinnerDateModel spinnerDateModel = new SpinnerDateModel();
+        JSpinner dateSpinner = new JSpinner(spinnerDateModel);
+        dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd"));
+        dateSpinner.setName("date-spinner");
+        return dateSpinner;
+    }
+
+    String getDate()
+    {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return  dateFormat.format(date.getValue());
+    }
+
+    String getSurname()
+    {
+        return textField1.getText();
+    }
+
+    char getSex() { if (maleRadioBut.isSelected()) return 'm'; else  return 'f';}
+
 }
 
 

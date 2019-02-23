@@ -1,4 +1,4 @@
-package Models;
+package Models.Data;
 
 public class DepartmentInfo {
 

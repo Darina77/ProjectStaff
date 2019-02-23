@@ -1,4 +1,4 @@
-package Models;
+package Models.Data;
 
 public class Department
 {
@@ -25,5 +25,20 @@ public class Department
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o){
+            return true;
+        }
+        else if (o.getClass() != Department.class) {
+            return false;
+        }
+        else {
+            Department dep = (Department) o;
+            return this.name.equals(dep.getName());
+        }
     }
 }

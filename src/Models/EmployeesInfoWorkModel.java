@@ -1,5 +1,7 @@
 package Models;
 
+import Models.Data.EmployeeInfoWork;
+
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.util.HashSet;
@@ -34,7 +36,7 @@ public class EmployeesInfoWorkModel implements TableModel {
             case 1:
                 return "Project name";
             case 2:
-                return "Id";
+                return "Stage";
             case 3:
                 return "Start date";
             case 4:
