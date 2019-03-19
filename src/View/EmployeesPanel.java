@@ -82,14 +82,17 @@ public class EmployeesPanel extends JPanel
             }
         });
         buttonSave.addActionListener(e -> {
-            table.getCellEditor().stopCellEditing();
-            if (controller.updateEmployee(((EmployeesModel) table.getModel()).getData())) {
-                System.out.println("Save complete");
-                showMessageDialog(null, "Save complete");
-            } else {
-                System.out.println("Save error");
-                showMessageDialog(null, "Save error");
-            }
+           if(table.getCellEditor()!= null) {
+               table.getCellEditor().stopCellEditing();
+           }
+
+           if (controller.updateEmployee(((EmployeesModel) table.getModel()).getData())) {
+               System.out.println("Save complete");
+               showMessageDialog(null, "Save complete");
+           } else {
+               System.out.println("Save error");
+               showMessageDialog(null, "Save error");
+           }
         });
 
         buttonInfo.addActionListener(e -> {

@@ -87,7 +87,9 @@ public class DepartmentsPanel extends JPanel
 
         JButton buttonSave = new JButton("Save");
         buttonSave.addActionListener(e -> {
-            table.getCellEditor().stopCellEditing();
+            if(table.getCellEditor()!= null) {
+                table.getCellEditor().stopCellEditing();
+            }
             if (controller.updateDep(((DepartmentsModel) table.getModel()).getData())) {
                 System.out.println("Save complete");
                 showMessageDialog(null, "Save complete");
