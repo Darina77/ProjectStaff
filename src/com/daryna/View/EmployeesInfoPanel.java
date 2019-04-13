@@ -1,36 +1,60 @@
 package com.daryna.View;
 
 import com.daryna.Models.*;
+import com.daryna.Models.Data.EmployeeInfoHead;
+import com.daryna.Models.Data.EmployeeInfoPos;
+import com.daryna.Models.Data.EmployeeInfoWork;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 class EmployeesInfoPanel extends JFrame
 {
 
-    public EmployeesInfoPanel(TableModel model, String text, int width, int height)
+    public EmployeesInfoPanel(ArrayList<EmployeeInfoPos> infoArrayList1,
+                              ArrayList<EmployeeInfoWork> infoArrayList2,
+                              ArrayList<EmployeeInfoHead> infoArrayList3,
+                              int width, int height)
     {
-        super(text);
-        JPanel main = new JPanel(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
+        super("Employee Info");
+        JPanel main = new JPanel();
+        main.setLayout(new GridBagLayout());
         setSize(width, height);
-        JLabel label = new JLabel(text);
-        c.gridy = 0;
-        c.gridwidth = 3;
-        c.gridx = 0;
-        c.weightx = 1;
-        c.weighty = 1;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        main.add(label);
-        JTable table = new JTable(model);
-        c.gridy = 1;
-        c.fill = GridBagConstraints.BOTH;
-        main.add(new JScrollPane(table), c);
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.fill=GridBagConstraints.BOTH;
+        constraints.weightx=1.0;
+        constraints.weighty=0.1;
+
+        JLabel label = new JLabel("Positions, Head and Works Info");
+        constraints.gridx=0;
+        constraints.gridy=0;
+        constraints.gridwidth=3;
+        constraints.gridheight=1;
+        main.add(label, constraints);
+
+        JTable table = new JTable(new EmployeesInfoPosModel(infoArrayList1));
+        constraints.weighty=1.0;
+        constraints.gridx=0;
+        constraints.gridy=1;
+        constraints.gridwidth=1;
+        constraints.gridheight=1;
+        main.add(new JScrollPane(table), constraints);
+        JTable table2 = new JTable(new EmployeesInfoHeadModel(infoArrayList3));
+        constraints.gridx=1;
+        constraints.gridy=1;
+        main.add(new JScrollPane(table2), constraints);
+        JTable table3 = new JTable(new EmployeesInfoWorkModel(infoArrayList2));
+        constraints.gridx=2;
+        constraints.gridy=1;
+        main.add(new JScrollPane(table3), constraints);
+
         add(main);
         setVisible(true);
     }

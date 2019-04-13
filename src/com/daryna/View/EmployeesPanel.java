@@ -107,9 +107,7 @@ public class EmployeesPanel extends JPanel
                 ArrayList<EmployeeInfoWork> infoArrayList2 = (ArrayList<EmployeeInfoWork>) controller.getEmployeeWorks(emplId, startDate, endDate);
                 ArrayList<EmployeeInfoHead> infoArrayList3 = (ArrayList<EmployeeInfoHead>) controller.getEmployeeHead(emplId, startDate, endDate);
 
-                EmployeesInfoPanel panel1 = new EmployeesInfoPanel(new EmployeesInfoPosModel(infoArrayList1), "Employee`s positions", width, height);
-                EmployeesInfoPanel panel2 = new EmployeesInfoPanel(new EmployeesInfoWorkModel(infoArrayList2), "Employee`s works", width, height);
-                EmployeesInfoPanel panel3 = new EmployeesInfoPanel(new EmployeesInfoHeadModel(infoArrayList3), "Head", width, height);
+                EmployeesInfoPanel panel1 = new EmployeesInfoPanel(infoArrayList1, infoArrayList2, infoArrayList3, 1100, height);
             } else {
                 System.out.println("User cancelled");
             }

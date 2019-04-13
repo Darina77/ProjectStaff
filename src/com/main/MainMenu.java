@@ -14,7 +14,7 @@ public class MainMenu {
 
     private static final int FRAME_WIDTH = 590;
     private static final int FRAME_HEIGHT = 360;
-    
+
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             JFrame frame = new JFrame();
