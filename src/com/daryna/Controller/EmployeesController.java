@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeesController {
-    private static String tableName = "employees";
+    private static String tableName = "Employees";
+
     private DbAccess access;
 
     public EmployeesController(DbAccess access) {
@@ -73,7 +74,7 @@ public class EmployeesController {
         List<EmployeeInfoPos> emplInfo = new ArrayList<>();
 
         String sql2 = "select `namePos`, `salary`, `startDate`, `endDate`, `nameDep`" +
-                "from (`positions` INNER JOIN `departments` ON `positions`.`idDep` = `departments`.`idDep`)" +
+                "from (`Positions` INNER JOIN `Departments` ON `Positions`.`idDep` = `Departments`.`idDep`)" +
                 "where (`idEmp` = '" + emplId + "' AND  `startDate` >= '" + startDate + "' AND (`endDate` IS NULL OR `endDate` <= '" + endDate + "'))";
         ResultSet res = access.getSet(sql2);
         try {
@@ -94,9 +95,9 @@ public class EmployeesController {
         access.connectionDb();
         List<EmployeeInfoHead> headInfo = new ArrayList<>();
 
-        String sql2 = "select `heads`.`startDate`, `heads`.`endDate`, `salary`, `nameProject`" +
-                "from (`heads` INNER JOIN `projects` ON `heads`.`idProject` = `projects`.`idProject`)" +
-                "where (`idEmp` = '" + emplId + "' AND  `heads`.`startDate` >= '" + startDate + "' AND (`heads`.`endDate` IS NULL OR `heads`.`endDate` <= '" + endDate + "'))";
+        String sql2 = "select `Heads`.`startDate`, `Heads`.`endDate`, `salary`, `nameProject`" +
+                "from (`Heads` INNER JOIN `Projects` ON `Heads`.`idProject` = `Projects`.`idProject`)" +
+                "where (`idEmp` = '" + emplId + "' AND  `Heads`.`startDate` >= '" + startDate + "' AND (`Heads`.`endDate` IS NULL OR `Heads`.`endDate` <= '" + endDate + "'))";
         ResultSet res = access.getSet(sql2);
         try {
             if (res != null) {
@@ -119,8 +120,8 @@ public class EmployeesController {
         String sql2 = "select `startDate`, `endDate`, `descriptionWork`, `numStage`, `nameProject` " +
                 "from ((select `idStage`, `numStage`, `nameProject` " +
                 "from `stages` " +
-                "inner join `projects` on `stages`.`idProject` = `projects`.`idProject`) as t " +
-                "inner join `works` on `t`.`idStage` = `works`.`idStage`) " +
+                "inner join `Projects` on `Stages`.`idProject` = `Projects`.`idProject`) as t " +
+                "inner join `Works` on `t`.`idStage` = `Works`.`idStage`) " +
                 "where (`idEmp` = '" + emplId + "' AND  `startDate` >= '" + startDate + "' AND (`endDate` IS NULL OR `endDate` <= '" + endDate + "'))";
         ResultSet res = access.getSet(sql2);
         try {

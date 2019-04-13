@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DepartmentsController {
 
-    private static String tableName = "departments";
+    private static String tableName = "Departments";
     private DbAccess access;
 
     public DepartmentsController(DbAccess access)
@@ -80,8 +80,8 @@ public class DepartmentsController {
         try {
             if (resDep.next()) {
                 int idDep = resDep.getInt(1);
-                String sql2 = "select `namePos`, `salary`, `positions`.`idEmp`, `surname` " +
-                        "from (`positions` INNER JOIN `employees` ON `positions`.`idEmp` = `employees`.`idEmp`) " +
+                String sql2 = "select `namePos`, `salary`, `Positions`.`idEmp`, `surname` " +
+                        "from (`Positions` INNER JOIN `Employees` ON `Positions`.`idEmp` = `Employees`.`idEmp`) " +
                         "where (`idDep` = '" + idDep + "' AND  `startDate` <= '" + date +"' AND (`endDate` IS NULL OR `endDate` >= '" + date + "'))";
                 ResultSet res = access.getSet(sql2);
                 try {
