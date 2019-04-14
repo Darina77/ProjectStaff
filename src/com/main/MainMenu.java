@@ -2,6 +2,7 @@ package com.main;
 
 import com.daryna.View.ProjectStaffMain;
 import com.rozhko.View.WorksWindow;
+import com.polikarpova.ui.DepartmentWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,7 +39,7 @@ public class MainMenu {
             });
             JButton departments = new JButton("Departments management");
             departments.addActionListener(e -> {
-                //TODO add departments
+                new DepartmentWindow();
             });
             JButton projects = new JButton("Projects management");
             projects.addActionListener(e -> {

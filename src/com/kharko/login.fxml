@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<?import javafx.scene.control.Button?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="243.0" prefWidth="240.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kharko.controllers.LoginController">
+   <children>
+      <TextField layoutX="46.0" layoutY="54.0" text="dbclass" fx:id="db" />
+      <TextField layoutX="46.0" layoutY="92.0" prefWidth="250.0" text="jdbc:mysql://localhost:3306/projects?useLegacyDatetimeCode=false&amp;serverTimezone=UTC"  fx:id="url"  />
+      <TextField layoutX="46.0" layoutY="131.0" text="root" fx:id="user" />
+      <TextField layoutX="46.0" layoutY="168.0" text="admin" fx:id="password"  />
+      <Button layoutX="46.0" layoutY="205.0" mnemonicParsing="false" text="Login"  fx:id="addButton" onAction="#handleAddButtonAction" />
+
+   </children>
+</AnchorPane>
