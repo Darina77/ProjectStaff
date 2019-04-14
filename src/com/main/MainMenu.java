@@ -1,6 +1,7 @@
 package com.main;
 
 import com.daryna.View.ProjectStaffMain;
+import com.rozhko.View.WorksWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,7 +46,8 @@ public class MainMenu {
             });
             JButton works = new JButton("Works management");
             works.addActionListener(e -> {
-                //TODO add works
+            	WorksWindow window = new WorksWindow();
+            	window.frame.setVisible(true);
             });
             JButton accounting = new JButton("Accounting");
             accounting.addActionListener(e -> {
