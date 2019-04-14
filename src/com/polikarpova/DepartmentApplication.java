@@ -1,4 +1,6 @@
-import ui.DepartmentWindow;
+package com.polikarpova;
+
+import com.polikarpova.ui.DepartmentWindow;
 
 import java.awt.*;
 

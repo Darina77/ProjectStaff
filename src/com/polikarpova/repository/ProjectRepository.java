@@ -1,6 +1,6 @@
-package repository;
+package com.polikarpova.repository;
 
-import domain.Project;
+import com.polikarpova.domain.Project;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

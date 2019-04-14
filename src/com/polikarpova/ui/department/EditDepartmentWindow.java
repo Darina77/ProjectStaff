@@ -1,7 +1,7 @@
-package ui.department;
+package com.polikarpova.ui.department;
 
-import repository.DepartmentRepository;
-import ui.DepartmentWindow;
+import com.polikarpova.repository.DepartmentRepository;
+import com.polikarpova.ui.DepartmentWindow;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

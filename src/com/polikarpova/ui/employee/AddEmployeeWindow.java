@@ -1,9 +1,9 @@
-package ui.employee;
+package com.polikarpova.ui.employee;
 
-import domain.Department;
-import repository.DepartmentRepository;
-import repository.PositionRepository;
-import ui.DepartmentWindow;
+import com.polikarpova.domain.Department;
+import com.polikarpova.repository.DepartmentRepository;
+import com.polikarpova.repository.PositionRepository;
+import com.polikarpova.ui.DepartmentWindow;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

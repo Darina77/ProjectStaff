@@ -1,25 +1,17 @@
-package repository;
+package com.polikarpova.repository;
 
 import java.sql.*;
 
 public class ConnectionManager {
 
-    private Connection connection = null;
+    private Connection connection;
     private Statement statement;
     private ResultSet resultSet;
     private PreparedStatement preparedStatement;
 
-    public ConnectionManager(){
-        try  {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch(Exception ex) {
-            System.out.println("DbAccess> " + ex.getMessage());
-        }
-    }
-
     public boolean connect(String db, String user, String passwd) {
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/" + db + "?useSSL=false&allowPublicKeyRetrieval=true", user, passwd);
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/" + db + "?useSSL=false&allowPublicKeyRetrieval=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", user, passwd);
             statement = connection.createStatement();
             return true;
         } catch (SQLException e) {

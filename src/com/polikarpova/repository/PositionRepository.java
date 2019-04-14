@@ -1,6 +1,6 @@
-package repository;
+package com.polikarpova.repository;
 
-import domain.Position;
+import com.polikarpova.domain.Position;
 
 import java.math.BigDecimal;
 import java.sql.Date;

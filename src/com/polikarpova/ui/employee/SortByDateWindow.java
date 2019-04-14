@@ -1,7 +1,7 @@
-package ui.employee;
+package com.polikarpova.ui.employee;
 
-import repository.DepartmentRepository;
-import ui.DepartmentWindow;
+import com.polikarpova.repository.DepartmentRepository;
+import com.polikarpova.ui.DepartmentWindow;
 
 public class SortByDateWindow {
     public SortByDateWindow(DepartmentWindow mainWindow, DepartmentRepository departmentRepository) {

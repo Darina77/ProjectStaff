@@ -1,13 +1,13 @@
-package ui;
+package com.polikarpova.ui;
 
-import domain.*;
-import repository.*;
-import ui.department.AddDepartmentWindow;
-import ui.department.EditDepartmentWindow;
-import ui.employee.AddEmployeeWindow;
-import ui.employee.EditEmployeeWindow;
-import ui.project.AddBossWindow;
-import ui.project.EditBossWindow;
+import com.polikarpova.domain.*;
+import com.polikarpova.repository.*;
+import com.polikarpova.ui.department.AddDepartmentWindow;
+import com.polikarpova.ui.department.EditDepartmentWindow;
+import com.polikarpova.ui.employee.AddEmployeeWindow;
+import com.polikarpova.ui.employee.EditEmployeeWindow;
+import com.polikarpova.ui.project.AddBossWindow;
+import com.polikarpova.ui.project.EditBossWindow;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

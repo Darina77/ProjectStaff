@@ -1,4 +1,4 @@
-package domain;
+package com.polikarpova.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
