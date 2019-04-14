@@ -9,6 +9,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
@@ -17,6 +19,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class DepartmentsPanel extends JPanel
 {
     DepartmentsController controller;
+    Department currentDep;
 
     public DepartmentsPanel(int width, int height, DepartmentsController controller) {
         super(new GridBagLayout());
@@ -26,7 +29,11 @@ public class DepartmentsPanel extends JPanel
         ArrayList<Department> departmentArrayList = (ArrayList<Department>) this.controller.getAllDepartments();
         TableModel model = new DepartmentsModel(departmentArrayList);
         JTable table = new JTable(model);
-
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                currentDep = departmentArrayList.get(table.convertRowIndexToModel(table.getSelectedRow()));
+            }
+        });
         JButton buttonAdd = new JButton("Add");
         buttonAdd.addActionListener(e -> {
             final AddDepartment dialog = new AddDepartment((JFrame) SwingUtilities.getWindowAncestor(this));
@@ -57,7 +64,8 @@ public class DepartmentsPanel extends JPanel
 
         JButton buttonDelete = new JButton("Delete");
         buttonDelete.addActionListener(e -> {
-            final RemoveDepartment dialog = new RemoveDepartment((JFrame) SwingUtilities.getWindowAncestor(this));
+
+            final RemoveDepartment dialog = new RemoveDepartment((JFrame) SwingUtilities.getWindowAncestor(this), currentDep);
             int result = dialog.show("Remove department");
 
             if (result == RemoveDepartment.OK_OPTION) {
@@ -100,7 +108,7 @@ public class DepartmentsPanel extends JPanel
 
         JButton buttonInfo = new JButton("Get Information");
         buttonInfo.addActionListener(e -> {
-            final FindDepartmentInfo dialog = new FindDepartmentInfo((JFrame) SwingUtilities.getWindowAncestor(this));
+            final FindDepartmentInfo dialog = new FindDepartmentInfo((JFrame) SwingUtilities.getWindowAncestor(this), currentDep);
             int result = dialog.show("Department info");
             if (result == RemoveDepartment.OK_OPTION) {
                 String depName = dialog.getDepName();
@@ -157,8 +165,9 @@ class RemoveDepartment extends JDialog {
 
     private JPanel content;
     private JTextField textField1;
+    private Department selectedDep;
 
-    RemoveDepartment(Frame parent) {
+    RemoveDepartment(Frame parent, Department dep) {
         super(parent, true);
 
         JPanel gui = new JPanel(new BorderLayout(3, 3));
@@ -184,6 +193,7 @@ class RemoveDepartment extends JDialog {
         });
         setContentPane(gui);
         setSize(360, 180);
+        selectedDep = dep;
     }
 
     int show(String title) {
@@ -193,6 +203,9 @@ class RemoveDepartment extends JDialog {
         JLabel label1 = new JLabel("Department name");
         content.add(label1);
         textField1 = new JTextField(15);
+        if (selectedDep != null) {
+            textField1.setText(selectedDep.getName());
+        }
         content.add(textField1);
 
         setVisible(true);

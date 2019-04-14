@@ -1,5 +1,6 @@
 package com.daryna.View;
 
+import com.daryna.Models.Data.Department;
 import com.daryna.Models.Data.DepartmentInfo;
 import com.daryna.Models.DepartmentInfoModel;
 
@@ -49,8 +50,9 @@ class FindDepartmentInfo extends JDialog
     private JPanel content;
     private JTextField textField1;
     private JSpinner  date;
+    private Department selected;
 
-    FindDepartmentInfo(Frame parent) {
+    FindDepartmentInfo(Frame parent, Department dep) {
         super(parent, true);
 
         JPanel gui = new JPanel(new BorderLayout(3, 3));
@@ -76,6 +78,7 @@ class FindDepartmentInfo extends JDialog
         });
         setContentPane(gui);
         setSize(360, 210);
+        selected = dep;
     }
 
     int show(String title) {
@@ -85,6 +88,10 @@ class FindDepartmentInfo extends JDialog
         JLabel label1 = new JLabel("Department name");
         content.add(label1);
         textField1 = new JTextField(15);
+        if (selected != null) {
+            textField1.setText(selected.getName());
+        }
+        
         content.add(textField1);
         JLabel label2 = new JLabel("Date");
         content.add(label2);

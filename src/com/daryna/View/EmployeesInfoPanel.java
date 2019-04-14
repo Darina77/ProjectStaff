@@ -1,6 +1,7 @@
 package com.daryna.View;
 
 import com.daryna.Models.*;
+import com.daryna.Models.Data.Employee;
 import com.daryna.Models.Data.EmployeeInfoHead;
 import com.daryna.Models.Data.EmployeeInfoPos;
 import com.daryna.Models.Data.EmployeeInfoWork;
@@ -73,8 +74,8 @@ class FindEmployeeInfo extends JDialog
     private JFormattedTextField textField1;
     private JSpinner startDate;
     private JSpinner endDate;
-
-    FindEmployeeInfo(Frame parent) {
+    private Employee selected;
+    FindEmployeeInfo(Frame parent, Employee emp) {
         super(parent, true);
 
         JPanel gui = new JPanel(new BorderLayout(3, 3));
@@ -100,6 +101,7 @@ class FindEmployeeInfo extends JDialog
         });
         setContentPane(gui);
         setSize(360, 210);
+        selected = emp;
     }
 
     int show(String title) {
@@ -110,7 +112,9 @@ class FindEmployeeInfo extends JDialog
         content.add(label1);
 
         textField1 = new JFormattedTextField();
-        textField1.setValue(new Integer(1));
+        if (selected != null){
+            textField1.setValue(new Integer(selected.getId()));
+        }
         content.add(textField1);
 
         JLabel label2 = new JLabel("Start date");
