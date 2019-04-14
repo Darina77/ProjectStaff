@@ -17,10 +17,10 @@ public class ProjectRepository {
 
     public List<Project> getProjects(Integer selected) {
 
-        String sql = "SELECT * FROM Project";
+        String sql = "SELECT * FROM Projects";
 
         if (selected != null) {
-            sql = "SELECT * FROM Project WHERE department_id=" + selected.intValue();
+            sql = "SELECT * FROM Projects WHERE idDep=" + selected.intValue();
         }
 
         List<Project> projects = new ArrayList<>();
@@ -31,14 +31,14 @@ public class ProjectRepository {
                 while (resultSet.next()) {
                     projects.add(new Project(
                             resultSet.getInt(1),
-                            resultSet.getString(2),
-                            resultSet.getDate(3),
+                            resultSet.getString(3),
                             resultSet.getDate(4),
                             resultSet.getDate(5),
-                            resultSet.getBigDecimal(6),
+                            resultSet.getDate(6),
                             resultSet.getBigDecimal(7),
-                            resultSet.getString(8),
-                            resultSet.getInt(9)
+                            resultSet.getBigDecimal(8),
+                            resultSet.getString(9),
+                            resultSet.getInt(10)
                     ));
                 }
             }
@@ -51,7 +51,7 @@ public class ProjectRepository {
     public int getDepartmentId(int projectId) {
         int departmentId = 0;
         try {
-            String sql = "SELECT department_id FROM Project WHERE project_id= " + projectId;
+            String sql = "SELECT idDep FROM Projects WHERE id= " + projectId;
             connectionManager.getStatement().execute(sql);
             ResultSet resultSet = connectionManager.getStatement().getResultSet();
             if ((resultSet != null) && (resultSet.next())) {

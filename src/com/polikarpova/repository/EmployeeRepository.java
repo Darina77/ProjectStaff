@@ -17,11 +17,11 @@ public class EmployeeRepository {
 
     public List<Employee> getEmployees(Integer selected) {
 
-        String sql = "SELECT * FROM Employee";
+        String sql = "SELECT * FROM Employees";
 
         if (selected != null) {
-            sql = "SELECT T1.employee_id, surname, sex, birthday FROM Employee T1 "
-                          + "INNER JOIN Positions T2 ON T1.employee_id = T2.employee_id WHERE T2.department_id=" + selected.intValue();
+            sql = "SELECT T1.idEmp, surname, sex, birthday FROM Employees T1 "
+                          + "INNER JOIN Positions T2 ON T1.idEmp = T2.idEmp WHERE T2.idDep=" + selected.intValue();
         }
 
         List<Employee> employees = new ArrayList<>();
@@ -46,7 +46,7 @@ public class EmployeeRepository {
     public Employee getEmployee(int employeeId) {
         Employee employee = null;
         try {
-            String sql = "SELECT * FROM Employee WHERE employee_id= " + employeeId;
+            String sql = "SELECT * FROM Employees WHERE idEmp= " + employeeId;
             connectionManager.getStatement().execute(sql);
             ResultSet resultSet = connectionManager.getStatement().getResultSet();
             if ((resultSet != null) && (resultSet.next())) {

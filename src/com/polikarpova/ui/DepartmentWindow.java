@@ -41,7 +41,8 @@ public class DepartmentWindow {
     public DepartmentWindow() {
         mainWindow = this;
         ConnectionManager connectionManager = new ConnectionManager();
-        connectionManager.connect("projects", "root", "qwertyuiop");
+        //connectionManager.connect("projects", "root", "qwertyuiop");
+        connectionManager.connect("Projects", "admin", "zzzz#1234");
 
         departmentRepository = new DepartmentRepository(connectionManager);
         employeeRepository = new EmployeeRepository(connectionManager);

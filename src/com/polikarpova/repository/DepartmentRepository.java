@@ -15,30 +15,12 @@ public class DepartmentRepository {
         this.connectionManager = connectionManager;
     }
 
-    public Department getDepartment(int departmentId) {
-        Department department = null;
-        try {
-            String sql = "SELECT departmentId, name, phone FROM Department WHERE departmentId = " + departmentId;
-            connectionManager.getStatement().execute(sql);
-            ResultSet resultSet = connectionManager.getStatement().getResultSet();
-            if ((resultSet != null) && (resultSet.next())) {
-                department = new Department(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return department;
-    }
-
     public int insertDepartment(String departmentName, String phone) {
-        int departmentId = connectionManager.getNextId("Department", "department_id");
+        int departmentId = connectionManager.getNextId("Departments", "idDep");
         int rows = 0;
         try {
             connectionManager.setPreparedStatement(connectionManager.getConnection().prepareStatement(
-                    "INSERT INTO Department (department_id, department_name, department_phone) VALUES(" + departmentId + ",?,?)"
+                    "INSERT INTO Departments (idDep, nameDep, phoneDep) VALUES(" + departmentId + ",?,?)"
             ));
             connectionManager.getPreparedStatement().setString(1, departmentName);
             connectionManager.getPreparedStatement().setString(2, phone);
@@ -53,18 +35,18 @@ public class DepartmentRepository {
 
     public void updateDepartment(int departmentId, String name, String phone) {
         try {
-            String sql = "UPDATE Department SET";
+            String sql = "UPDATE Departments SET";
             boolean updatesDefined = false;
             if (name != null) {
-                sql += " department_name = '" + name + "'";
+                sql += " nameDep = '" + name + "'";
                 updatesDefined = true;
             }
             if (phone != null) {
                 if (updatesDefined) sql += ",";
-                sql += " department_phone = '" + phone + "'";
+                sql += " phoneDep = '" + phone + "'";
                 updatesDefined = true;
             }
-            sql += " WHERE department_id = " + departmentId;
+            sql += " WHERE idDep = " + departmentId;
             if (updatesDefined) {
                 connectionManager.getStatement().executeUpdate(sql);
             }
@@ -75,7 +57,7 @@ public class DepartmentRepository {
 
     public void deleteDepartment(int departmentId) {
         try {
-            String sql = "delete from Department where department_id = " + departmentId;
+            String sql = "delete from Departments where idDep = " + departmentId;
             connectionManager.getStatement().executeUpdate(sql);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -85,7 +67,7 @@ public class DepartmentRepository {
     public List<Department> getDepartments() {
         List<Department> departments = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM Department";
+            String sql = "SELECT * FROM Departments";
             connectionManager.getStatement().execute(sql);
             ResultSet resultSet = connectionManager.getStatement().getResultSet();
             if (resultSet != null) {
