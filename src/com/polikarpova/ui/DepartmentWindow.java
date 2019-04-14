@@ -42,7 +42,7 @@ public class DepartmentWindow {
         mainWindow = this;
         ConnectionManager connectionManager = new ConnectionManager();
         //connectionManager.connect("projects", "root", "qwertyuiop");
-        connectionManager.connect("Projects", "admin", "zzzz#1234");
+        connectionManager.connect("Projects", "root", "123456");
 
         departmentRepository = new DepartmentRepository(connectionManager);
         employeeRepository = new EmployeeRepository(connectionManager);
