@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kharko.controllers.PayController">
+   <children>
+      <ComboBox layoutX="40.0" layoutY="40.0" prefWidth="150.0" promptText="Оберіть співробітника" fx:id="worker"/>
+      <ComboBox layoutX="415.0" layoutY="40.0" prefWidth="150.0" promptText="Оберіть керівника" fx:id="head"/>
+      <Button layoutX="40.0" layoutY="84.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Виплатити" fx:id="pay" onAction="#handlePay"/>
+      <Button layoutX="415.0" layoutY="84.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Виплатити" fx:id="payHead" onAction="#handlePayHead"/>
+      <Button layoutX="40.0" layoutY="146.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="До списку посад" fx:id="list" onAction="#handlePosada"/>
+      <Button layoutX="415.0" layoutY="146.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Статистика" fx:id="statistics" onAction="#handleStatistics" />
+   </children>
+</AnchorPane>
