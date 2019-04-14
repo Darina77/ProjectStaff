@@ -8,6 +8,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
@@ -17,7 +19,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class EmployeesPanel extends JPanel
 {
     EmployeesController controller;
-
+    Employee currentEmp;
     public EmployeesPanel(int width, int height, EmployeesController controller)
     {
         super(new GridBagLayout());
@@ -27,7 +29,11 @@ public class EmployeesPanel extends JPanel
         ArrayList<Employee> employeesArrayList = (ArrayList<Employee>) controller.getAllEmployees();
         TableModel model = new EmployeesModel(employeesArrayList);
         JTable table = new JTable(model);
-
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                currentEmp = employeesArrayList.get(table.convertRowIndexToModel(table.getSelectedRow()));
+            }
+        });
         JButton buttonAdd = new JButton("Add");
         JButton buttonDelete = new JButton("Delete");
         JButton buttonSave = new JButton("Save");
@@ -56,7 +62,7 @@ public class EmployeesPanel extends JPanel
         });
 
         buttonDelete.addActionListener(e -> {
-            final RemoveEmployee dialog = new RemoveEmployee((JFrame) SwingUtilities.getWindowAncestor(this));
+            final RemoveEmployee dialog = new RemoveEmployee((JFrame) SwingUtilities.getWindowAncestor(this), currentEmp);
             int result = dialog.show("Remove employee");
             if (result == RemoveEmployee.OK_OPTION) {
                 System.out.println("Remove employee");
@@ -95,7 +101,7 @@ public class EmployeesPanel extends JPanel
         });
 
         buttonInfo.addActionListener(e -> {
-            final FindEmployeeInfo dialog = new FindEmployeeInfo((JFrame) SwingUtilities.getWindowAncestor(this));
+            final FindEmployeeInfo dialog = new FindEmployeeInfo((JFrame) SwingUtilities.getWindowAncestor(this), currentEmp);
             int result = dialog.show("Employee info");
             if (result == RemoveDepartment.OK_OPTION) {
                 System.out.println("Info employee");
@@ -153,8 +159,8 @@ class RemoveEmployee extends JDialog
 
     private JPanel content;
     private JFormattedTextField textField1;
-
-    RemoveEmployee(Frame parent) {
+    private Employee selected;
+    RemoveEmployee(Frame parent, Employee emp) {
         super(parent, true);
 
         JPanel gui = new JPanel(new BorderLayout(3, 3));
@@ -180,6 +186,7 @@ class RemoveEmployee extends JDialog
         });
         setContentPane(gui);
         setSize(360, 180);
+        selected = emp;
     }
 
     int show(String title) {
@@ -189,7 +196,10 @@ class RemoveEmployee extends JDialog
         JLabel label1 = new JLabel("Employee id");
         content.add(label1);
         textField1 = new JFormattedTextField();
-        textField1.setValue(new Integer(1));
+        if (selected != null){
+            textField1.setValue(new Integer(selected.getId()));
+        }
+
         content.add(textField1);
 
         setVisible(true);
