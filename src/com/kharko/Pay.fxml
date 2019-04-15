@@ -11,9 +11,9 @@
       <ComboBox layoutX="415.0" layoutY="40.0" prefWidth="150.0" promptText="Оберіть керівника" fx:id="head"/>
       <ComboBox layoutX="40.0" layoutY="80.0" prefWidth="150.0" promptText="Оберіть відділ" fx:id="viddil"/>
       <Button layoutX="40.0" layoutY="124.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Виплатити" fx:id="pay" onAction="#handlePay"/>
-      <Button layoutX="40.0" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Виплатити" fx:id="payViddil" onAction="#handlePayViddil"/>
+      <Button layoutX="40.0" layoutY="164.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Виплатити відділу" fx:id="payViddil" onAction="#handlePayViddil"/>
       <Button layoutX="415.0" layoutY="124.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Виплатити" fx:id="payHead" onAction="#handlePayHead"/>
-      <Button layoutX="40.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="До списку посад" fx:id="list" onAction="#handlePosada"/>
-      <Button layoutX="415.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Статистика" fx:id="statistics" onAction="#handleStatistics" />
+      <Button layoutX="40.0" layoutY="206.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="До списку посад" fx:id="list" onAction="#handlePosada"/>
+      <Button layoutX="415.0" layoutY="206.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Статистика" fx:id="statistics" onAction="#handleStatistics" />
    </children>
 </AnchorPane>

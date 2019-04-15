@@ -91,13 +91,16 @@ public class StatisticsController {
                 sumvalue += Double.parseDouble(salary.getAmount());
             }
             sum.setText("Сума : " + sumvalue);
+            TableColumn NameCol = new TableColumn("Керівник");
+            NameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+            NameCol.setPrefWidth(96.0);
             TableColumn firstNameCol = new TableColumn("Дата");
             firstNameCol.setCellValueFactory(new PropertyValueFactory<>("month"));
             firstNameCol.setPrefWidth(96.0);
             TableColumn lastNameCol = new TableColumn("Дохід");
             lastNameCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
             lastNameCol.setPrefWidth(103.0);
-            table.getColumns().setAll(firstNameCol, lastNameCol);
+            table.getColumns().setAll(NameCol, firstNameCol, lastNameCol);
             table.setItems(data1);
         }
 

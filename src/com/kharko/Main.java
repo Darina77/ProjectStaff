@@ -1,6 +1,7 @@
 package com.kharko;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import com.kharko.Utils.kek;
 import com.kharko.dao.PersonDataAccessor;
@@ -12,13 +13,15 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         primaryStage1 = primaryStage;
-        kek.init(primaryStage).setLogin();
+        kek.init(primaryStage).setPosad();
+        Platform.setImplicitExit(false);
     }
 
-    public void startOld() throws Exception{
+    public static void startOld() throws Exception{
+
         Stage newStage = new Stage();
         newStage.setTitle("Login");
-        kek.init(newStage).setLogin();
+        kek.getInstance().setPosad();
     }
 
     public static void main(String[] args) {

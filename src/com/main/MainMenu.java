@@ -5,6 +5,7 @@ import com.projects.ProjectFrame;
 import com.rozhko.View.WorksWindow;
 import com.polikarpova.ui.DepartmentWindow;
 import com.kharko.Main;
+import javafx.application.Platform;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +23,7 @@ public class MainMenu {
     private static int FX = 0;
 
     public static void main(String[] args) throws Exception {
+
         EventQueue.invokeLater(() -> {
             JFrame frame = new JFrame();
             JPanel panel = new JPanel();
@@ -61,27 +63,31 @@ public class MainMenu {
             accounting.addActionListener(e -> {
                 //TODO add accounting
             });
+
             JButton salary = new JButton("Salary management");
-            Main main = new Main();
                 salary.addActionListener(e -> {
+                    if(FX==0) {
                     new Thread(new Runnable() {
                         public void run()
                         {
-                            if(FX==0) {
-                                String[] kek = new String[0];
-                                main.main(kek);
-                                FX++;
-                            } else {
-                                try {
-                                    main.startOld();
-                                } catch (Exception e1){
-
-                                }
-                            }
+                            FX++;
+                            String[] kek = new String[0];
+                            Main.main(kek);
                         }
                     }).start();
-
+                } else {
+                        Platform.runLater(new Runnable(){
+                            public void run() {
+                                try {
+                                    Main.startOld();
+                                } catch (Exception e1){
+                                    System.out.println(e1);
+                                }
+                            }
+                        });
+                    }
             });
+
 
             panel.add(staff);
             panel.add(departments);

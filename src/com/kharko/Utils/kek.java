@@ -17,10 +17,10 @@ public class kek {
     public static EmployeeDataAcessor employeeDataAcessor;
     public static PersonDataAccessor dataAccessor;
     public static Stage primaryStage1;
-    public static String driverClassName;
-    public static String URL;
-    public static String user;
-    public static String password;
+    public static String driverClassName  = "dbClass";
+    public static String URL = "jdbc:mysql://35.204.182.138:3306/Projects?useLegacyDatetimeCode=false&serverTimezone=UTC";
+    public static String user = "root";
+    public static String password = "123456";
     private static kek daun;
 
     public static kek init(Stage roflan){
@@ -64,8 +64,8 @@ public class kek {
         controller.setViddilDate(viddils);
         controller.setEmployees(employees);
 
-        primaryStage1.setTitle("Hello World");
-        primaryStage1.setScene(new Scene(root, 600, 475));
+        primaryStage1.setTitle("Posada");
+        primaryStage1.setScene(new Scene(root, 700, 475));
         primaryStage1.show();
     }
 
@@ -88,7 +88,7 @@ public class kek {
         controller.setWorkers(employeeDataAcessor.getPersonList());
         controller.setHeads(employeeDataAcessor.getHeadList());
         controller.setViddil(dataAccessor.getViddilList());
-        primaryStage1.setTitle("Hello World");
+        primaryStage1.setTitle("Salary");
         primaryStage1.setScene(new Scene(root, 600, 300));
         primaryStage1.show();
 
@@ -103,8 +103,8 @@ public class kek {
         controller.setHead(employeeDataAcessor.getHeadList());
         controller.setWorkers(employeeDataAcessor.getPersonList());
 
-        primaryStage1.setTitle("Hello World");
-        primaryStage1.setScene(new Scene(root, 600, 400));
+        primaryStage1.setTitle("Stats");
+        primaryStage1.setScene(new Scene(root, 700, 400));
         primaryStage1.show();
 
     }
