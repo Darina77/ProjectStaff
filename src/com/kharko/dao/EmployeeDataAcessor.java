@@ -1,5 +1,7 @@
 package com.kharko.dao;
 
+import com.daryna.Models.Data.Department;
+import com.kharko.types.Viddil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import com.kharko.types.Head;
@@ -30,15 +32,14 @@ public class EmployeeDataAcessor {
     public ObservableList<Worker> getPersonList() throws SQLException {
         try (
                 Statement stmnt = connection.createStatement();
-                ResultSet res = stmnt.executeQuery("select * from employees");
+                ResultSet res = stmnt.executeQuery("select * from Employees");
         ){
             ObservableList<Worker> positionList = FXCollections.observableArrayList();
 
             while (res.next()) {
                 String id = res.getString("idEmp");
                 String name= res.getString("surname");
-                String idPos = res.getString("idPos");
-                Worker position = new Worker(id, name, idPos);
+                Worker position = new Worker(id, name);
                 positionList.add(position);
             }
 
@@ -49,7 +50,7 @@ public class EmployeeDataAcessor {
     public ObservableList<Head> getHeadList() throws SQLException {
         try (
                 Statement stmnt = connection.createStatement();
-                ResultSet res = stmnt.executeQuery("select * from heads");
+                ResultSet res = stmnt.executeQuery("select * from Heads");
         ){
             ObservableList<Head> positionList = FXCollections.observableArrayList();
 
@@ -59,7 +60,7 @@ public class EmployeeDataAcessor {
                 String idEmp = res.getString("idEmp");
                 String name = "0";
                 Statement stmntget = connection.createStatement();
-                ResultSet resget = stmntget.executeQuery("select * from employees where idEmp = " + idEmp);
+                ResultSet resget = stmntget.executeQuery("select * from Employees where idEmp = " + idEmp);
                 while (resget.next()) {
                     name =  resget.getString("surname");
                 }
@@ -73,9 +74,10 @@ public class EmployeeDataAcessor {
 
     public void pay(Worker employee) throws SQLException {
         Statement stmntget = connection.createStatement();
-        ResultSet res = stmntget.executeQuery("select * from positions where idPos = " + employee.getidPos());
+        ResultSet res = stmntget.executeQuery("select * from Positions where idDep = " + employee.getid());
         String a = "0";
         while (res.next()) {
+
            a =  res.getString("salary");
         }
 
@@ -88,6 +90,20 @@ public class EmployeeDataAcessor {
         stmnt.setString(3, a);
 
         stmnt.execute();
+    }
+
+    public void payViddil(Viddil employee) throws SQLException {
+        Statement stmntget = connection.createStatement();
+        ResultSet res = stmntget.executeQuery("select * from Positions where idDep = " + employee.getidDep());
+        long millis=System.currentTimeMillis();
+        while(res.next()){
+            PreparedStatement stmnt = connection.prepareStatement("insert  into salary (Month, idEmp,Amount) values (?,?,?)");
+            stmnt.setDate(1, new java.sql.Date(millis));
+            stmnt.setString(2,res.getString("idEmp"));
+            stmnt.setString(3, res.getString("salary"));
+
+            stmnt.execute();
+        }
     }
 
     public void payHead(Head employee) throws SQLException {
@@ -115,10 +131,10 @@ public class EmployeeDataAcessor {
         while(res.next()){
             if(res.getDate("month").compareTo(date)>=0 &&res.getDate("month").compareTo(date2)<=0){
                 String id = res.getString("id");
-                String name= res.getString("month");
+                String month= res.getString("month");
                 String idPos = res.getString("amount");
                 String idEmp = res.getString("idEmp");
-                Salary position = new Salary(id, idPos, name,idEmp);
+                Salary position = new Salary(id, idPos, month,idEmp, employee.getName());
                 positionList.add(position);
             }
         }
@@ -145,7 +161,7 @@ public class EmployeeDataAcessor {
                 String name= res.getString("month");
                 String idPos = res.getString("ammount");
                 String idEmp = res.getString("idHead");
-                Salary position = new Salary(id, idPos, name,idEmp);
+                Salary position = new Salary(id, idPos, name,idEmp,employee.getName());
                 positionList.add(position);
             }
         }

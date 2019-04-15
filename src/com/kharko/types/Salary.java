@@ -27,6 +27,17 @@ public class Salary {
         amount().set(amount);
     }
 
+    private final StringProperty name = new SimpleStringProperty(this, "name");
+    public StringProperty name() {
+        return name ;
+    }
+    public final String getName() {
+        return name().get();
+    }
+    public final void setName(String month) {
+        name().set(month);
+    }
+
     private final StringProperty month = new SimpleStringProperty(this, "month");
     public StringProperty month() {
         return month ;
@@ -55,10 +66,11 @@ public class Salary {
 
     }
 
-    public Salary(String id,String amount, String month, String idEmp) {
+    public Salary(String id,String amount, String month, String idEmp, String name) {
         setid(id);
         setamount(amount);
         setmonth(month);
         setidEmp(idEmp);
+        setName(name);
     }
 }

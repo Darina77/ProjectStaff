@@ -1,12 +1,13 @@
 package com.kharko.controllers;
 
+import com.daryna.Models.Data.Employee;
+import com.kharko.types.Salary;
+import com.kharko.types.Worker;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Window;
 import com.kharko.Utils.kek;
 import com.kharko.helpers.PersonDataHelper;
@@ -40,11 +41,28 @@ public class PositionController  {
     @FXML
     private DatePicker endDate;
 
+    @FXML
+    private ComboBox<Worker> employee;
+
+    @FXML
+    TableView<Position> table;
+
     public void setData(ObservableList<Position> data) {
+
+        TableColumn firstNameCol = new TableColumn("Назва");
+        firstNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        firstNameCol.setPrefWidth(96.0);
+        TableColumn lastNameCol = new TableColumn("Зарплата");
+        lastNameCol.setCellValueFactory(new PropertyValueFactory<>("salary"));
+        lastNameCol.setPrefWidth(103.0);
+        table.getColumns().setAll(firstNameCol, lastNameCol);
+        table.setItems(data);
         target.setItems(data);
     }
 
     public void setViddilDate(ObservableList<Viddil> data) { viddil.setItems(data); }
+
+    public void setEmployees(ObservableList<Worker> data) { employee.setItems(data); }
 
     @FXML
     protected void handleDeleteButtonAction(ActionEvent event) throws Exception {
@@ -67,7 +85,7 @@ public class PositionController  {
         PersonDataHelper helper = new PersonDataHelper(kek.getInstance());
         Window owner = addButton.getScene().getWindow();
         if(salaryValue != null&&posNameValue != null&&viddil.getValue().getidDep()!=null) {
-            Position a = new Position(salaryValue,viddil.getValue().getidDep(),posNameValue,startDateValue,endDateValue);
+            Position a = new Position(salaryValue,viddil.getValue().getidDep(),posNameValue,startDateValue,endDateValue,employee.getValue().getid());
             helper.addPosition(a);
             setData(helper.getPosition());
         }
