@@ -18,7 +18,7 @@ public class Dao {
                 "JOIN accounting_transaction ON accounting_transaction.id = accounting_saldo.transaction_id " +
                 "LEFT JOIN accounting_payment_from_client ON accounting_payment_from_client.transaction_id = accounting_saldo.transaction_id " +
                 "LEFT JOIN accounting_payment_to_employee ON accounting_payment_to_employee.transaction_id = accounting_saldo.transaction_id " +
-                "LEFT JOIN project ON project.id = accounting_payment_to_employee.project_id OR project.id = accounting_payment_from_client.project_id ";
+                "LEFT JOIN Stages ON Stages.idStage = accounting_payment_to_employee.stage_id LEFT JOIN Projects ON Projects.id = idProject OR Projects.id = accounting_payment_from_client.project_id ";
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         final String startDate = dateFormat.format(datePeriod.start);
@@ -108,7 +108,7 @@ public class Dao {
     }
 
     public static List<Project> getAllProjects() {
-        String sql = "SELECT * FROM project";
+        String sql = "SELECT * FROM Projects";
 
         List<Project> result = new ArrayList<>();
 
@@ -116,7 +116,7 @@ public class Dao {
             ResultSet rs = Db.query(sql);
             while(rs.next()) {
                 int id = rs.getInt("id");
-                String name = rs.getString("name");
+                String name = rs.getString("nameProject");
 
                 result.add(new Project(id, name));
             }
