@@ -21,12 +21,12 @@ public class ProjectStaffMain extends JFrame {
         super(title);
         JTabbedPane panels = new JTabbedPane();
         DbAccess dbAccess = new DbAccess(db, user, pass);
-        DepartmentsController depController = new DepartmentsController(dbAccess);
-        JPanel departmentsPanel = new DepartmentsPanel(PANEL_WIDTH, PANEL_HEIGHT, depController);
+        ///DepartmentsController depController = new DepartmentsController(dbAccess);
+        //JPanel departmentsPanel = new DepartmentsPanel(PANEL_WIDTH, PANEL_HEIGHT, depController);
         EmployeesController emplController = new EmployeesController(dbAccess);
         JPanel employeesPanel = new EmployeesPanel(PANEL_WIDTH, PANEL_HEIGHT, emplController);
 
-        panels.add("Departments", departmentsPanel);
+        //panels.add("Departments", departmentsPanel);
         panels.add("Employees", employeesPanel);
 
         add(panels);

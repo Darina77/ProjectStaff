@@ -22,10 +22,12 @@ public class EmployeeInfoPos {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        try {
-            this.endDate = dateFormat.parse(endDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if (endDate != null) {
+            try {
+                this.endDate = dateFormat.parse(endDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         this.salary = salary;
     }
@@ -43,7 +45,9 @@ public class EmployeeInfoPos {
     }
 
     public String getEndDate() {
-        return dateFormat.format(endDate);
+        if (endDate != null) {
+            return dateFormat.format(endDate);
+        } else return  "";
     }
 
     public double getSalary() {
