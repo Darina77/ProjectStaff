@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static javax.swing.WindowConstants.HIDE_ON_CLOSE;
+
 public class DepartmentWindow {
     private DepartmentWindow mainWindow;
     private DepartmentRepository departmentRepository;
@@ -86,6 +88,8 @@ public class DepartmentWindow {
         JComponent panel3 = addProjectPanel();
         tabbedPane.addTab("Управління  проектами", panel3);
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_3);
+
+        frame.setDefaultCloseOperation(HIDE_ON_CLOSE);
     }
 
     private JComponent addDepartmentPanel() {

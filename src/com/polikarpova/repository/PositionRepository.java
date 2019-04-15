@@ -23,14 +23,14 @@ public class PositionRepository {
         int rows = 0;
         try {
             connectionManager.setPreparedStatement(connectionManager.getConnection().prepareStatement(
-                    "INSERT INTO Positions (endDate, idDep, idEmp, idPos, namePos, salary, startDate) VALUES(?" +
-                            departmentId + "," + employeeId + "," + positionId +
-                            ",?,?,?)"
+                    "INSERT INTO Positions (idPos, namePos, startDate, endDate, salary, idDep, idEmp) VALUES(" +
+                            positionId + ",?,?,?,?," + employeeId + "," + departmentId +
+                            ")"
             ));
-            connectionManager.getPreparedStatement().setDate(4, Date.valueOf(LocalDate.now()));
-            connectionManager.getPreparedStatement().setDate(1, null);
-            connectionManager.getPreparedStatement().setBigDecimal(3, salary);
-            connectionManager.getPreparedStatement().setString(2, description);
+            connectionManager.getPreparedStatement().setDate(2, Date.valueOf(LocalDate.now()));
+            connectionManager.getPreparedStatement().setDate(3, null);
+            connectionManager.getPreparedStatement().setBigDecimal(4, salary);
+            connectionManager.getPreparedStatement().setString(1, description);
             rows = connectionManager.getPreparedStatement().executeUpdate();
             if (rows == 0) departmentId = 0;
 

@@ -25,7 +25,7 @@ public class BossRepository {
                             bossId + "," + projectId + ",?,?)"
             ));
             connectionManager.getPreparedStatement().setDate(3, Date.valueOf(LocalDate.now()));
-            connectionManager.getPreparedStatement().setDate(1, null);
+            connectionManager.getPreparedStatement().setDate(1, Date.valueOf(LocalDate.now()));
             connectionManager.getPreparedStatement().setBigDecimal(2, BigDecimal.ZERO);
             rows = connectionManager.getPreparedStatement().executeUpdate();
             if (rows == 0) bossId = 0;
