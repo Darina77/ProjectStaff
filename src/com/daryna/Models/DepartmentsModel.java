@@ -26,15 +26,17 @@ public class DepartmentsModel implements TableModel {
 
     @Override
     public int getColumnCount() {
-        return 2;
+        return 3;
     }
 
     @Override
     public String getColumnName(int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return "Name";
+                return "Id";
             case 1:
+                return "Name";
+            case 2:
                 return "Phone number";
         }
         return "";
@@ -60,8 +62,10 @@ public class DepartmentsModel implements TableModel {
         Department current = data.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return current.getName();
+                return current.getId();
             case 1:
+                return current.getName();
+            case 2:
                 return current.getPhoneNumber();
         }
         return "";
@@ -71,9 +75,12 @@ public class DepartmentsModel implements TableModel {
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
          switch (columnIndex) {
              case 0:
-                 data.get(rowIndex).setName((String) aValue);
+                 data.get(rowIndex).setId((int) aValue);
                  break;
              case 1:
+                 data.get(rowIndex).setName((String) aValue);
+                 break;
+             case 2:
                  data.get(rowIndex).setPhoneNumber((String) aValue);
                  break;
          }
@@ -96,12 +103,14 @@ public class DepartmentsModel implements TableModel {
 
     public void addData(Department dep) throws CloneNotSupportedException {
         if (hasData(dep)) throw new CloneNotSupportedException("Department exists");
+        int id = data.get(data.size()-1).getId() + 1;
+        dep.setId(id);
         data.add(dep);
     }
 
-    public void removeData(String depName) throws NoSuchElementException
+    public void removeData(int id) throws NoSuchElementException
     {
-        Department temp = new Department(depName, "");
+        Department temp = new Department(id, "", "");
         if (!hasData(temp)) throw new NoSuchElementException("No such department");
         data.remove(temp);
     }

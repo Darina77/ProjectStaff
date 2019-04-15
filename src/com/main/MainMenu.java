@@ -32,8 +32,9 @@ public class MainMenu {
             panel.add(tittle);
 
             JButton staff = new JButton("Staff management");
-            ProjectStaffMain staffMain = new ProjectStaffMain("Projects staff");
+
             staff.addActionListener(e -> {
+                ProjectStaffMain staffMain = new ProjectStaffMain("Projects staff");
                 staffMain.setSize(FRAME_WIDTH, FRAME_HEIGHT);
                 staffMain.setVisible(true);
             });
@@ -41,9 +42,10 @@ public class MainMenu {
             departments.addActionListener(e -> {
                 new DepartmentWindow();
             });
-            ProjectFrame projectFrame = new ProjectFrame("Projects management");
+
             JButton projects = new JButton("Projects management");
             projects.addActionListener(e -> {
+                ProjectFrame projectFrame = new ProjectFrame("Projects management");
                 projectFrame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
                 projectFrame.setVisible(true);
             });

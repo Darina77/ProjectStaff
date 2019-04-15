@@ -28,7 +28,7 @@ public class DepartmentsController {
             if (res != null)
             {
                 while (res.next()){
-                    departments.add(new Department(res.getString(2), res.getString(3)));
+                    departments.add(new Department(res.getInt(1), res.getString(2), res.getString(3)));
                 }
             }
         } catch (SQLException e) {
@@ -47,10 +47,10 @@ public class DepartmentsController {
         return res;
     }
 
-    public boolean removeDepartment(String depName)
+    public boolean removeDepartment(int depId)
     {
         access.connectionDb();
-        String sql = "delete from " + tableName + " where ( `nameDep` = '" + depName + "')";
+        String sql = "delete from " + tableName + " where ( `idDep` = '" + depId + "')";
         boolean res = access.update(sql);
         access.disConnect();
         return res;
@@ -63,7 +63,7 @@ public class DepartmentsController {
         for (Department dep: all)
         {
             String sql = "update " + tableName + " set `nameDep` = '" + dep.getName() + "', `phoneDep` = '"
-                    + dep.getPhoneNumber() + "' where (`nameDep` ='"+ dep.getName() + "')";
+                    + dep.getPhoneNumber() + "' where (`idDep` ='"+ dep.getId() + "')";
             res = access.update(sql);
             if(!res) break;
         }
