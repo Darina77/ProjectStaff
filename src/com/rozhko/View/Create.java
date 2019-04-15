@@ -2,6 +2,7 @@ package com.rozhko.View;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -12,6 +13,7 @@ import javax.swing.JTextField;
 import com.rozhko.Controller.DbAccess;
 import com.rozhko.Models.Item;
 import com.rozhko.Models.MyComboBoxModel;
+import com.savenkov.models.Transaction;
 
 import java.awt.Button;
 import javax.swing.JButton;
@@ -146,7 +148,14 @@ public class Create {
 				String stage = modelStages.getSelectedItem().getId();
 				
 				
-				db.createTask(empId, startDateN, endDateN, descN, rewardN, stage);
+				int workId = db.createTask(empId, startDateN, endDateN, descN, rewardN, stage);
+
+//				int transactionId = com.savenkov.dao.Dao.createTransaction(new Transaction(
+//						-1,
+//						-Double.parseDouble(rewardN),
+//						new Date(), null, "Payment to employee: " + descN), false);
+//
+//				com.savenkov.dao.Dao.createPaymentToEmployee(workId, transactionId, Integer.parseInt(stage));
 				
 				frame.setVisible(false);
 			}

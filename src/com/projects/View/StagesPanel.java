@@ -5,6 +5,7 @@ import com.projects.Models.StagesModel;
 import com.projects.Controller.StagesController;
 import com.rozhko.Models.Item;
 import com.rozhko.Models.MyComboBoxModel;
+import com.savenkov.models.Transaction;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -16,6 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Vector;
 
@@ -64,6 +66,13 @@ public class StagesPanel extends JPanel {
                             table.revalidate();
                             this.revalidate();
                             showMessageDialog(null, "Add stage");
+
+                            int transactionId = com.savenkov.dao.Dao.createTransaction(new Transaction(
+                                    -1,
+                                    dialog.getPrice(),
+                                    new Date(), null, "Payment from client for project " + selectedProjectId), false);
+
+                            com.savenkov.dao.Dao.createPaymentFromClient(transactionId, selectedProjectId);
                         } else {
                             showMessageDialog(null, "Error!");
                         }

@@ -28,9 +28,9 @@ public class Dao {
 
         if(projectId != null) {
             if(projectId == -1) {
-                sql += " AND project.id IS NULL ";
+                sql += " AND Projects.id IS NULL ";
             } else {
-                sql += " AND project.id = " + projectId;
+                sql += " AND Projects.id = " + projectId;
             }
         }
 
@@ -65,7 +65,7 @@ public class Dao {
         String sql = "SELECT * FROM accounting_transaction " +
                 "LEFT JOIN accounting_payment_from_client ON accounting_payment_from_client.transaction_id = accounting_transaction.id " +
                 "LEFT JOIN accounting_payment_to_employee ON accounting_payment_to_employee.transaction_id = accounting_transaction.id " +
-                "LEFT JOIN project ON project.id = accounting_payment_to_employee.project_id OR project.id = accounting_payment_from_client.project_id ";
+                "LEFT JOIN Stages ON Stages.idStage = accounting_payment_to_employee.stage_id LEFT JOIN Projects ON Projects.id = idProject OR Projects.id = accounting_payment_from_client.project_id ";
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         final String startDate = dateFormat.format(datePeriod.start);
@@ -76,9 +76,9 @@ public class Dao {
         sql += " AND ";
         if(projectId != null) {
             if(projectId == -1) {
-                sql += "project.id IS NULL AND ";
+                sql += "Projects.id IS NULL AND ";
             } else {
-                sql += "project.id = " + projectId + " AND ";
+                sql += "Projects.id = " + projectId + " AND ";
             }
         }
         sql += " timePayed IS NULL";
@@ -127,7 +127,7 @@ public class Dao {
         return result;
     }
 
-    public static void createTransaction(Transaction transaction, boolean isApproved) {
+    public static int createTransaction(Transaction transaction, boolean isApproved) {
         String sql = "INSERT INTO accounting_transaction(amount, timeCreated, timePayed, description) VALUES (" +
                 " " + transaction.getAmount() + ", NOW(), NULL, \"" + transaction.getDescription().replace("\"", "'") + "\" ); ";
 
@@ -147,6 +147,35 @@ public class Dao {
             } catch(Exception e) {
                 e.printStackTrace();
             }
+        }
+
+        try {
+            ResultSet rs = Db.query("SELECT MAX(id) AS id FROM accounting_transaction;");
+            rs.next();
+            int id = rs.getInt("id");
+            return id;
+        } catch(Exception e) {
+            return -1;
+        }
+    }
+
+    public static void createPaymentToEmployee(int workId, int transactionId, int stageId) {
+        String sql = "INSERT INTO accounting_payment_to_employee(employee_work_id, transaction_id, stage_id) VALUES (" + workId + "," + transactionId + "," + stageId + ")";
+
+        try {
+            Db.execute(sql);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void createPaymentFromClient(int transactionId, int projectId) {
+        String sql = "INSERT INTO accounting_payment_from_client(client_milestone_id, transaction_id, project_id) VALUES (0, " + transactionId + "," + projectId + ")";
+
+        try {
+            Db.execute(sql);
+        } catch(Exception e) {
+            e.printStackTrace();
         }
     }
 

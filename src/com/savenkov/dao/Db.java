@@ -60,7 +60,9 @@ public class Db {
                     username,
                     password);
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(frame, "DB is not running at " + hostname);
+            if(frame != null) {
+                JOptionPane.showMessageDialog(frame, "DB is not running at " + hostname);
+            }
             e.printStackTrace();
         }
 
@@ -69,6 +71,9 @@ public class Db {
     public static Db db;
 
     public static ResultSet query(String sql) {
+        if(db == null) {
+            db = new Db(null);
+        }
         try {
             return db.conn.createStatement().executeQuery(sql);
         } catch(Exception e) {
@@ -79,6 +84,9 @@ public class Db {
 
 
     public static boolean execute(String sql) {
+        if(db == null) {
+            db = new Db(null);
+        }
         try {
             return db.conn.createStatement().execute(sql);
         } catch(Exception e) {

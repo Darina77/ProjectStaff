@@ -2,6 +2,7 @@ package com.kharko.dao;
 
 import com.daryna.Models.Data.Department;
 import com.kharko.types.Viddil;
+import com.savenkov.models.Transaction;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import com.kharko.types.Head;
@@ -85,11 +86,19 @@ public class EmployeeDataAcessor {
 
         PreparedStatement stmnt = connection.prepareStatement("insert  into salary (Month, idEmp,Amount) values (?,?,?)");
 
+
+
         stmnt.setDate(1, new java.sql.Date(millis));
         stmnt.setString(2,employee.getid());
         stmnt.setString(3, a);
 
         stmnt.execute();
+
+        com.savenkov.dao.Dao.createTransaction(new Transaction(
+                -1,
+                -Double.parseDouble(a),
+                new Date(), new Date(), "Salary to employee: " + employee.getName()), true);
+
     }
 
     public void payViddil(Viddil employee) throws SQLException {
@@ -103,7 +112,14 @@ public class EmployeeDataAcessor {
             stmnt.setString(3, res.getString("salary"));
 
             stmnt.execute();
+
+            com.savenkov.dao.Dao.createTransaction(new Transaction(
+                    -1,
+                    -Double.parseDouble(res.getString("salary")),
+                    new Date(), new Date(), "Salary to viddil: " + employee.getName()), true);
         }
+
+
     }
 
     public void payHead(Head employee) throws SQLException {
@@ -115,6 +131,11 @@ public class EmployeeDataAcessor {
         stmnt.setString(3, employee.getSalary());
 
         stmnt.execute();
+
+        com.savenkov.dao.Dao.createTransaction(new Transaction(
+                -1,
+                -Double.parseDouble(employee.getSalary()),
+                new Date(), new Date(), "Salary to head: " + employee.getName()), true);
     }
 
     public ObservableList<Salary>  getSalary(Worker employee, String dateStart, String dateEnd) throws Exception {
