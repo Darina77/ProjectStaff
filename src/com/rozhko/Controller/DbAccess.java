@@ -162,8 +162,6 @@ public class DbAccess {
 			if (idStage.length() > 0) {
 				sql.append(" AND s.idStage = " + idStage);
 			}
-			
-			System.out.println(sql);
 		}
 		try {
 			Statement statement = conn.createStatement();
