@@ -56,7 +56,7 @@ public class MainMenu {
             });
             JButton accounting = new JButton("Accounting");
             accounting.addActionListener(e -> {
-                //TODO add accounting
+                com.savenkov.Main.main(args);
             });
             JButton salary = new JButton("Salary management");
             salary.addActionListener(e -> {

@@ -40,7 +40,8 @@ public class Db {
             System.out.println(password);
 
             if(hostname.length() == 0) {
-                hostname = "jdbc:mysql://localhost:3306/procenko_proekt?useUnicode=yes&characterEncoding=UTF-8";
+                hostname = "jdbc:mysql://35.204.182.138:3306/Projects?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+//                hostname = "jdbc:mysql://localhost:3306/procenko_proekt?useUnicode=yes&characterEncoding=UTF-8";
 //                hostname = "jdbc:mysql://procenko-proekt.cryh31oso2ii.eu-central-1.rds.amazonaws.com:3306/procenko_proekt";
 //                username = "admin";
 //                password = "zzzz#1234";
@@ -51,7 +52,7 @@ public class Db {
             }
 
             if(password.length() == 0) {
-                password = "zzzz1234";
+                password = "123456";
             }
 
             this.conn = DriverManager.getConnection(
