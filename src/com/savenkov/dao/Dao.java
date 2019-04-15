@@ -108,7 +108,7 @@ public class Dao {
     }
 
     public static List<Project> getAllProjects() {
-        String sql = "SELECT * FROM project";
+        String sql = "SELECT * FROM Projects";
 
         List<Project> result = new ArrayList<>();
 
@@ -116,7 +116,7 @@ public class Dao {
             ResultSet rs = Db.query(sql);
             while(rs.next()) {
                 int id = rs.getInt("id");
-                String name = rs.getString("name");
+                String name = rs.getString("nameProject");
 
                 result.add(new Project(id, name));
             }
