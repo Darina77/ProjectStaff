@@ -71,6 +71,17 @@ public class Position {
         endDate().set(endDate);
     }
 
+    private final StringProperty employeeId = new SimpleStringProperty(this, "employeeId");
+    public StringProperty employeeId() {
+        return employeeId ;
+    }
+    public final String getEmployeeId() {
+        return employeeId().get();
+    }
+    public final void setEmployeeId(String endDate) {
+        employeeId().set(endDate);
+    }
+
 
     @Override
     public String toString() {
@@ -81,19 +92,21 @@ public class Position {
 
     }
 
-    public Position(String id, String salary, String idDep, String name) {
+    public Position(String id, String salary, String idDep, String name, String employeeId) {
         setId(id);
         setSalary(salary);
         setidDep(idDep);
         setName(name);
+        setEmployeeId(employeeId);
     }
 
-    public Position(String salary, String idDep, String name, String startDate, String endDate) {
+    public Position(String salary, String idDep, String name, String startDate, String endDate, String employeeId) {
         setSalary(salary);
         setidDep(idDep);
         setName(name);
         setstartDate(startDate);
         setendDate(endDate);
+        setEmployeeId(employeeId);
     }
 
 }

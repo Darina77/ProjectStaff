@@ -1,5 +1,6 @@
 package com.kharko.Utils;
 
+import com.kharko.types.Worker;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,7 +26,7 @@ public class kek {
     public static kek init(Stage roflan){
         if(daun == null) {
             daun = new kek(roflan);
-        }
+       }
         return daun;
     }
 
@@ -51,15 +52,17 @@ public class kek {
     //jdbc:mysql://localhost:3306/projects
     public void setPosad() throws Exception{
         dataAccessor = new PersonDataAccessor(driverClassName, URL ,user,password);
-
+        employeeDataAcessor = new EmployeeDataAcessor(driverClassName, URL ,user,password);
         ObservableList<Position> positions =  dataAccessor.getPersonList();
         ObservableList<Viddil> viddils = dataAccessor.getViddilList();
+        ObservableList<Worker> employees = employeeDataAcessor.getPersonList();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/kharko/Position.fxml"));
         Parent root = loader.load();
         PositionController controller = loader.getController();
 
         controller.setData(positions);
         controller.setViddilDate(viddils);
+        controller.setEmployees(employees);
 
         primaryStage1.setTitle("Hello World");
         primaryStage1.setScene(new Scene(root, 600, 475));
@@ -70,7 +73,7 @@ public class kek {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/kharko/login.fxml"));
         Parent root = loader.load();
-
+        primaryStage1 = new Stage();
         primaryStage1.setTitle("Hello World");
         primaryStage1.setScene(new Scene(root, 300, 400));
         primaryStage1.show();
@@ -78,11 +81,13 @@ public class kek {
 
     public void setPay() throws Exception{
         employeeDataAcessor = new EmployeeDataAcessor(driverClassName, URL ,user,password);
+        dataAccessor = new PersonDataAccessor(driverClassName, URL ,user,password);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/kharko/Pay.fxml"));
         Parent root = loader.load();
         PayController controller = loader.getController();
         controller.setWorkers(employeeDataAcessor.getPersonList());
         controller.setHeads(employeeDataAcessor.getHeadList());
+        controller.setViddil(dataAccessor.getViddilList());
         primaryStage1.setTitle("Hello World");
         primaryStage1.setScene(new Scene(root, 600, 300));
         primaryStage1.show();

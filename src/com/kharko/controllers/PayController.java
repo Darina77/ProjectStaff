@@ -1,5 +1,6 @@
 package com.kharko.controllers;
 
+import com.kharko.types.Viddil;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,10 +18,16 @@ public class PayController {
     ComboBox<Head> head;
 
     @FXML
+    ComboBox<Viddil> viddil;
+
+    @FXML
     Button pay;
 
     @FXML
     Button payHead;
+
+    @FXML
+    Button payViddil;
 
     @FXML
     Button list;
@@ -33,6 +40,8 @@ public class PayController {
     }
 
     public void setHeads(ObservableList<Head> data) { head.setItems(data); }
+
+    public void setViddil(ObservableList<Viddil> data) { viddil.setItems(data); }
 
     @FXML
     protected void handlePosada() throws Exception{
@@ -54,4 +63,8 @@ public class PayController {
         kek.getInstance().employeeDataAcessor.payHead(head.getValue());
     }
 
+    @FXML
+    protected void handlePayViddil() throws Exception {
+        kek.getInstance().employeeDataAcessor.payViddil(viddil.getValue());
+    }
 }

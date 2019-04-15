@@ -29,7 +29,7 @@ public class PersonDataAccessor {
     public ObservableList<Position> getPersonList() throws SQLException {
         try (
                 Statement stmnt = connection.createStatement();
-                ResultSet res = stmnt.executeQuery("select * from positions");
+                ResultSet res = stmnt.executeQuery("select * from Positions");
         ){
             ObservableList<Position> positionList = FXCollections.observableArrayList();
 
@@ -37,8 +37,9 @@ public class PersonDataAccessor {
                 String id = res.getString("idPos");
                 String salary = res.getString("salary");
                 String idDep = res.getString("idDep");
-                String name= res.getString("Name");
-                Position position = new Position(id, salary, idDep, name);
+                String name= res.getString("namePos");
+                String employeeId = res.getString("idEmp");
+                Position position = new Position(id, salary, idDep, name, employeeId);
                 positionList.add(position);
             }
 
@@ -49,7 +50,7 @@ public class PersonDataAccessor {
     public ObservableList<Viddil> getViddilList() throws SQLException {
         try (
                 Statement stmnt = connection.createStatement();
-                ResultSet res = stmnt.executeQuery("select * from departments");
+                ResultSet res = stmnt.executeQuery("select * from Departments");
         ){
             ObservableList<Viddil> viddilList = FXCollections.observableArrayList();
 
@@ -70,7 +71,7 @@ public class PersonDataAccessor {
 
     public void deletePerson(String name) throws SQLException {
         Statement stmnt = connection.createStatement();
-        int res = stmnt.executeUpdate("DELETE  from positions where positions.idPos = " + name);
+        int res = stmnt.executeUpdate("DELETE  from positions where Positions.idPos = " + name);
     }
 
     public void addPerson(Position position) throws SQLException, ParseException {
@@ -78,13 +79,14 @@ public class PersonDataAccessor {
         Date myDate = format.parse(position.startDate().get());
         Date myDate2 = format.parse(position.endDate().get());
 
-        PreparedStatement stmnt = connection.prepareStatement("insert  into positions (salary, Name,idDep,startDate,endDate) values (?,?,?,?,?)");
-
+        PreparedStatement stmnt = connection.prepareStatement("insert  into Positions (salary, namePos,idDep,startDate,endDate,idEmp) values (?,?,?,?,?,?)");
+        System.out.println(position.getEmployeeId());
         stmnt.setInt(1, Integer.parseInt(position.getSalary()));
         stmnt.setString(2,position.getName());
         stmnt.setInt(3,Integer.parseInt(position.getidDep()));
         stmnt.setDate(4, new java.sql.Date(myDate.getTime()));
         stmnt.setDate(5, new java.sql.Date(myDate2.getTime()));
+        stmnt.setInt(6,Integer.parseInt(position.getEmployeeId()));
         stmnt.execute();
 
     }

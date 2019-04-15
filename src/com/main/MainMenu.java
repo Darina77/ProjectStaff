@@ -4,6 +4,7 @@ import com.daryna.View.ProjectStaffMain;
 import com.projects.ProjectFrame;
 import com.rozhko.View.WorksWindow;
 import com.polikarpova.ui.DepartmentWindow;
+import com.kharko.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +19,9 @@ public class MainMenu {
     private static final int FRAME_WIDTH = 590;
     private static final int FRAME_HEIGHT = 360;
 
-    public static void main(String[] args) {
+    private static int FX = 0;
+
+    public static void main(String[] args) throws Exception {
         EventQueue.invokeLater(() -> {
             JFrame frame = new JFrame();
             JPanel panel = new JPanel();
@@ -59,8 +62,25 @@ public class MainMenu {
                 com.savenkov.Main.main(args);
             });
             JButton salary = new JButton("Salary management");
-            salary.addActionListener(e -> {
-                //TODO add salary
+            Main main = new Main();
+                salary.addActionListener(e -> {
+                    new Thread(new Runnable() {
+                        public void run()
+                        {
+                            if(FX==0) {
+                                String[] kek = new String[0];
+                                main.main(kek);
+                                FX++;
+                            } else {
+                                try {
+                                    main.startOld();
+                                } catch (Exception e1){
+
+                                }
+                            }
+                        }
+                    }).start();
+
             });
 
             panel.add(staff);
@@ -75,6 +95,8 @@ public class MainMenu {
             frame.setSize(PANEL_WIDTH, PANEL_HEIGHT);
             frame.setVisible(true);
         });
+
+
     }
 
 }

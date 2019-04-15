@@ -11,10 +11,15 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        primaryStage1 = primaryStage;
         kek.init(primaryStage).setLogin();
-
     }
 
+    public void startOld() throws Exception{
+        Stage newStage = new Stage();
+        newStage.setTitle("Login");
+        kek.init(newStage).setLogin();
+    }
 
     public static void main(String[] args) {
         launch(args);

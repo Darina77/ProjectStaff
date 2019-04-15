@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kharko.controllers.StatisticsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kharko.controllers.StatisticsController">
    <children>
       <ComboBox fx:id="worker" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="178.0" promptText="Оберіть співробітника" />
       <DatePicker fx:id="dateStart" layoutX="103.0" layoutY="63.0" prefHeight="25.0" prefWidth="178.0" />
@@ -15,7 +15,7 @@
       <DatePicker fx:id="dateEnd" layoutX="103.0" layoutY="119.0" prefHeight="25.0" prefWidth="178.0" />
       <Label layoutX="103.0" layoutY="102.0" text="Кінець" />
       <Button fx:id="show" layoutX="14.0" layoutY="156.0" mnemonicParsing="false" onAction="#getData" prefHeight="25.0" prefWidth="178.0" text="Переглянути" />
-      <TableView fx:id="table" layoutX="386.0" layoutY="13.0" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="table" layoutX="386.0" layoutY="13.0" prefHeight="200.0" prefWidth="300.0">
         <columns>
          <!-- <TableColumn prefWidth="96.0" text="Місяць" fx:id="asd" />
           <TableColumn prefWidth="103.0" text="Дохід" fx:id="asd1"/>-->

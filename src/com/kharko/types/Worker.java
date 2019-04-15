@@ -27,8 +27,10 @@ public class Worker {
         idName().set(name);
     }
 
-    private final StringProperty idPos = new SimpleStringProperty(this, "idPos");
-    public StringProperty idPos() {
+    /*private final StringProperty idPos = new SimpleStringProperty(this, "idPos");*/
+
+
+    /*public StringProperty idPos() {
         return idPos ;
     }
     public final String getidPos() {
@@ -36,7 +38,7 @@ public class Worker {
     }
     public final void setidPos(String name) {
         idPos().set(name);
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -47,10 +49,10 @@ public class Worker {
 
     }
 
-    public Worker(String id,String name, String idPos) {
+    public Worker(String id,String name) {
         setid(id);
         setName(name);
-        setidPos(idPos);
+        //setidPos(idPos);
     }
 
 }
