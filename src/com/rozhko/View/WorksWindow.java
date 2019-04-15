@@ -11,6 +11,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Vector;
 
@@ -27,6 +28,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JTextPane;
+import javax.swing.JLabel;
 
 public class WorksWindow {
 
@@ -36,6 +39,7 @@ public class WorksWindow {
 	MyComboBoxModel modelStages;
 	MyTableModel modelTable;
 	JTextField textField;
+	JLabel amount;
 
 	private static DbAccess db = null;
 
@@ -54,11 +58,13 @@ public class WorksWindow {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 800, 500);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel tasksPanel = new JPanel();
 		tasksPanel.setLayout(null);
 		
+		amount = new JLabel("0");
+		amount.setBounds(678, 390, 61, 16);
+		tasksPanel.add(amount);
 		
 		tasksPanel.add(createInput());
 		tasksPanel.add(createTable());
@@ -79,6 +85,10 @@ public class WorksWindow {
 		});
 		
 		frame.getContentPane().add(tasksPanel);
+		
+		JLabel label = new JLabel("Сума:");
+		label.setBounds(632, 390, 43, 16);
+		tasksPanel.add(label);
 	}
 
 	private JTextField createInput() {
@@ -100,8 +110,9 @@ public class WorksWindow {
 		scrollPane.setBounds(6, 400, 761, -344);
 		
 		Vector<Data> tableData = db.getTable("", "", "");
-
+		
 		modelTable = new MyTableModel(tableData);
+		setAmount(tableData);
 
 		table = new JTable(modelTable);
 		table.setPreferredScrollableViewportSize(new Dimension(755, 346));
@@ -176,7 +187,20 @@ public class WorksWindow {
 		
 		Vector<Data> tableData = db.getTable(name, idPrj, idStg);
 		modelTable.updateData(tableData);
+		setAmount(tableData);
 	}
-
 	
+	
+	private void setAmount(Vector<Data> data) {
+		float sum = 0;
+		
+		Iterator value = data.iterator(); 
+		   
+        while (value.hasNext()) { 
+        	Data v = (Data) value.next();
+        	sum += Float.parseFloat(v.getPrice());
+        } 
+        
+        amount.setText(Float.toString(sum));
+	}
 }
