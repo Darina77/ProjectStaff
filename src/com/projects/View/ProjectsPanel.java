@@ -21,8 +21,8 @@ public class ProjectsPanel extends JPanel {
     ProjectsController controller;
     TableModel model;
     JTable table;
-
-    public ProjectsPanel(int width, int height, ProjectsController controller)
+    StagesPanel stages;
+    public ProjectsPanel(int width, int height, ProjectsController controller, StagesPanel stages)
     {
         super();
         setSize(width, height);
@@ -61,6 +61,7 @@ public class ProjectsPanel extends JPanel {
                         if (controller.addProject(project)) {
                             ((ProjectsModel) model).addData(project);
                             table.revalidate();
+                            stages.reloadProjects();
                             showMessageDialog(null, "Add project");
 
                         } else {
@@ -86,6 +87,7 @@ public class ProjectsPanel extends JPanel {
                         try {
                             ((ProjectsModel) model).removeData(idProject);
                             table.revalidate();
+                            stages.reloadProjects();
                             showMessageDialog(null, "Remove project");
                         } catch (NoSuchElementException e1) {
                             showMessageDialog(null, "No such project");
@@ -106,6 +108,7 @@ public class ProjectsPanel extends JPanel {
             }
 
             if (controller.updateProjects(((ProjectsModel) table.getModel()).getData())) {
+                stages.reloadProjects();
                 System.out.println("Save complete");
                 showMessageDialog(null, "Save complete");
             } else {

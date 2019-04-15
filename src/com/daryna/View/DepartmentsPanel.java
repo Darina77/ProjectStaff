@@ -70,11 +70,11 @@ public class DepartmentsPanel extends JPanel
 
             if (result == RemoveDepartment.OK_OPTION) {
                 System.out.println("Remove department");
-                String depName = dialog.getVal();
-                if (((DepartmentsModel) model).hasData(new Department(depName, ""))) {
-                    if (controller.removeDepartment(depName)) {
+                int depId = dialog.getVal();
+                if (((DepartmentsModel) model).hasData(new Department(depId, "", ""))) {
+                    if (controller.removeDepartment(depId)) {
                         try {
-                            ((DepartmentsModel) model).removeData(depName);
+                            ((DepartmentsModel) model).removeData(depId);
                             table.revalidate();
                             showMessageDialog(null, "Remove department");
                         } catch (NoSuchElementException e1) {
@@ -200,11 +200,11 @@ class RemoveDepartment extends JDialog {
         setTitle(title);
         content.removeAll();
 
-        JLabel label1 = new JLabel("Department name");
+        JLabel label1 = new JLabel("Department id");
         content.add(label1);
         textField1 = new JTextField(15);
         if (selectedDep != null) {
-            textField1.setText(selectedDep.getName());
+            textField1.setText(selectedDep.getId()+"");
         }
         content.add(textField1);
 
@@ -212,11 +212,11 @@ class RemoveDepartment extends JDialog {
         return result;
     }
 
-    String getVal() {
+    int getVal() {
         if (textField1 != null) {
-            return textField1.getText();
+            return Integer.parseInt(textField1.getText());
         } else {
-            return "";
+            return -1;
         }
     }
 
@@ -280,8 +280,8 @@ class AddDepartment extends JDialog {
 
     public Department getVal() {
         if (textField1 != null && textField2 != null) {
-            return new Department(textField1.getText(), textField2.getText());
-        } else return new Department("", "");
+            return new Department(0, textField1.getText(), textField2.getText());
+        } else return new Department(0,"", "");
     }
 
 }

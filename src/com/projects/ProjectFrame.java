@@ -21,11 +21,12 @@ public class ProjectFrame extends JFrame {
         super(title);
         JTabbedPane panels = new JTabbedPane();
         DbAccess dbAccess = new DbAccess(db, user, pass);
-        ProjectsController pController = new ProjectsController(dbAccess);
-        JPanel pPanel = new ProjectsPanel(PANEL_WIDTH, PANEL_HEIGHT, pController);
-
         StagesController sController = new StagesController(dbAccess);
         JPanel sPanel = new StagesPanel(PANEL_WIDTH, PANEL_HEIGHT, sController);
+        ProjectsController pController = new ProjectsController(dbAccess);
+        JPanel pPanel = new ProjectsPanel(PANEL_WIDTH, PANEL_HEIGHT, pController, (StagesPanel) sPanel);
+
+
 
         panels.add("Projects", pPanel);
         panels.add("Stages", sPanel);

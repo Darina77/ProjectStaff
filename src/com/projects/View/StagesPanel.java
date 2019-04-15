@@ -28,7 +28,8 @@ public class StagesPanel extends JPanel {
     StagesController controller;
     TableModel model;
     JTable table;
-
+    MyComboBoxModel modelProjects;
+    JComboBox comboBox;
     public StagesPanel(int width, int height, StagesController controller)
     {
         super();
@@ -115,6 +116,29 @@ public class StagesPanel extends JPanel {
                 showMessageDialog(null, "Save error");
             }
         });
+        Vector<Item> projectsList = controller.getAllProjects();
+
+        projectsList.add(0, new Item("", "All projects"));
+
+        modelProjects = new MyComboBoxModel(projectsList);
+
+        comboBox = new JComboBox(modelProjects);
+        comboBox.setBounds(482, 6, 129, 29);
+
+        comboBox.addActionListener(e -> {
+            JComboBox cb = (JComboBox) e.getSource();
+            Item selected = (Item) cb.getSelectedItem();
+            if (selected != null) {
+                String id = selected.getId();
+                ((StagesModel) model).update(id);
+                table.revalidate();
+                if (id == "") {
+                    selectedProjectId = null;
+                } else {
+                    selectedProjectId = Integer.parseInt(id);
+                }
+            }
+        });
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.gridx = 0;
@@ -134,7 +158,7 @@ public class StagesPanel extends JPanel {
         c.weightx = 0.5;
         c.gridx = 3;
         c.gridy = 0;
-        add(createProjectsSelect(), c);
+        add(comboBox, c);
         c.gridy = 2;
         c.gridwidth = 4;
         c.gridx = 0;
@@ -144,35 +168,19 @@ public class StagesPanel extends JPanel {
         add(new JScrollPane(table), c);
     }
 
-    private JComboBox createProjectsSelect() {
+    public void reloadProjects()
+    {
         Vector<Item> projectsList = controller.getAllProjects();
+
         projectsList.add(0, new Item("", "All projects"));
 
-        MyComboBoxModel modelProjects = new MyComboBoxModel(projectsList);
+        modelProjects.removeAllElements();
+        for (Item i : projectsList)
+        {
+            modelProjects.addElement(i);
+        }
 
-        JComboBox comboBox = new JComboBox(modelProjects);
-        comboBox.setBounds(482, 6, 129, 29);
-
-        comboBox.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JComboBox cb = (JComboBox) e.getSource();
-                Item selected = (Item) cb.getSelectedItem();
-                String id = selected.getId();
-                ((StagesModel) model).update(id);
-                table.revalidate();
-                if (id == "")
-                {
-                    selectedProjectId = null;
-                } else{
-                    selectedProjectId = Integer.parseInt(id);
-                }
-
-            }
-        });
-
-        return comboBox;
+        comboBox.revalidate();
     }
 }
 

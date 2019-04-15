@@ -2,11 +2,13 @@ package com.daryna.Models.Data;
 
 public class Department
 {
+    private int id;
     private String name;
     private String phoneNumber;
 
-    public Department(String name, String phoneNumber)
+    public Department(int id, String name, String phoneNumber)
     {
+        this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
@@ -38,7 +40,15 @@ public class Department
         }
         else {
             Department dep = (Department) o;
-            return this.name.equals(dep.getName());
+            return this.id == dep.getId();
         }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
