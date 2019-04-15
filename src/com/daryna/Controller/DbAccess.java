@@ -23,7 +23,7 @@ public class DbAccess {
     public boolean connectionDb() {
         try {
            // conn = DriverManager.getConnection("jdbc:mysql://localhost/" + db + "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true", user, passwd);
-            conn = DriverManager.getConnection("jdbc:mysql://procenko-proekt.cryh31oso2ii.eu-central-1.rds.amazonaws.com:3306/" + db + "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true", user, passwd);
+            conn = DriverManager.getConnection("jdbc:mysql://35.204.182.138:3306/" + db + "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true", user, passwd);
             return true;
         } catch (SQLException e) {
 

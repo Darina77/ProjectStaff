@@ -1,6 +1,7 @@
 package com.main;
 
 import com.daryna.View.ProjectStaffMain;
+import com.projects.ProjectFrame;
 import com.rozhko.View.WorksWindow;
 import com.polikarpova.ui.DepartmentWindow;
 
@@ -33,7 +34,6 @@ public class MainMenu {
             JButton staff = new JButton("Staff management");
             ProjectStaffMain staffMain = new ProjectStaffMain("Projects staff");
             staff.addActionListener(e -> {
-                //ProjectStaffMain window = new ProjectStaffMain("Projects staff");
                 staffMain.setSize(FRAME_WIDTH, FRAME_HEIGHT);
                 staffMain.setVisible(true);
             });
@@ -41,9 +41,11 @@ public class MainMenu {
             departments.addActionListener(e -> {
                 new DepartmentWindow();
             });
+            ProjectFrame projectFrame = new ProjectFrame("Projects management");
             JButton projects = new JButton("Projects management");
             projects.addActionListener(e -> {
-                //TODO add projects
+                projectFrame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+                projectFrame.setVisible(true);
             });
             JButton works = new JButton("Works management");
             works.addActionListener(e -> {

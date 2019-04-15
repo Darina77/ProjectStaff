@@ -54,7 +54,7 @@ public class EmployeesPanel extends JPanel
                         showMessageDialog(null, "Error!");
                     }
                 } else {
-                    showMessageDialog(null, "Department must be unique!");
+                    showMessageDialog(null, "Employee must be unique!");
                 }
             } else {
                 System.out.println("User cancelled");

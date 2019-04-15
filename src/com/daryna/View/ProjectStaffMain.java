@@ -13,8 +13,8 @@ public class ProjectStaffMain extends JFrame {
     private static final int PANEL_WIDTH = 830;
     private static final int PANEL_HEIGHT = 530;
     private static final String db = "Projects";
-    private static final String user = "admin";
-    private static final String pass = "zzzz#1234";
+    private static final String user = "root";
+    private static final String pass = "123456";
 
     public ProjectStaffMain(String title)
     {
